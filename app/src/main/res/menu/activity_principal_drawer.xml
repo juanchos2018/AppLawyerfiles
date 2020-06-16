@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/nav_archivos"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Archivos" />
+        <item
+            android:id="@+id/nav_clientes"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Clientes" />
+
+        <item
+            android:id="@+id/nav_colegas"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Colegas" />
+
+        <item
+            android:id="@+id/nav_bandeja"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Bandeja" />
+
+        <item
+            android:id="@+id/nav_consultas"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Consultas" />
+
+        <item
+            android:id="@+id/nav_perfil"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Perfil" />
+
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+            android:id="@+id/nav_cerrar"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Cerrar Sesion" />
+
+
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="white">#ffffff</color>
+    <color name="red">#ff0000</color>
+    <color name="green">#00ab03</color>
+    <color name="gray">#c7c7c7</color>
+    <color name="dark_gray">#9b9a9a</color>
+    <color name="blue_link">#257df1</color>
+    <color name="verde">#28B38D </color>
+    <color name="dot_inactive">#aaa</color>
+    <color name="dot_active">#000000</color>
+    <color name="bgVerde">#08B34F</color>
+    <color name="bgAmarillo">#ECAE27</color>
+    <!--<color name="bgAzul">#0569C3</color>-->
+    <color name="bgAzul">#503AD7</color>
+    <color name="bgRojo">#EB0A1D</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="color_yelow">#e5be01</color>
+
+
+    <array name="array_background">
+        <item>@color/bgAmarillo</item>
+        <item>@color/bgAzul</item>
+        <item>@color/bgVerde</item>
+        <item>@color/bgRojo</item>
+    </array>
+
+    <array name="array_dot">
+        <item name="dotAmarillo">#FFFFFF</item>
+        <item name="dotAzul">#FFFFFF</item>
+        <item name="dotVerde">#FFFFFF</item>
+        <item name="dotRojo">#FFFFFF</item>
+    </array>
+</resources>
