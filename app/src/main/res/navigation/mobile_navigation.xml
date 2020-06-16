@@ -10,6 +10,38 @@
         android:name="com.document.lawyerfiles.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/nav_archivos"
+        android:name="com.document.lawyerfiles.ui.archivos.ArchivosFragment"
+        android:label="Archivos"
+        tools:layout="@layout/archivos_fragment" />
 
+    <fragment
+        android:id="@+id/nav_clientes"
+        android:name="com.document.lawyerfiles.ui.clientes.ClientesFragment"
+        android:label="Clientes"
+        tools:layout="@layout/clientes_fragment" />
+    <fragment
+        android:id="@+id/nav_colegas"
+        android:name="com.document.lawyerfiles.ui.colegas.ColegasFragment"
+        android:label="Colegas"
+        tools:layout="@layout/colegas_fragment" />
+
+    <fragment
+        android:id="@+id/nav_bandeja"
+        android:name="com.document.lawyerfiles.ui.bandeja.BandejaFragment"
+        android:label="Bandeja"
+        tools:layout="@layout/bandeja_fragment" />
+
+    <fragment
+        android:id="@+id/nav_consultas"
+        android:name="com.document.lawyerfiles.ui.consultas.ConsultasFragment"
+        android:label="Consultas"
+        tools:layout="@layout/consultas_fragment" />
+    <fragment
+        android:id="@+id/nav_perfil"
+        android:name="com.document.lawyerfiles.ui.perfil.PerfilFragment"
+        android:label="Perfil"
+        tools:layout="@layout/perfil_fragment" />
 
 </navigation>
