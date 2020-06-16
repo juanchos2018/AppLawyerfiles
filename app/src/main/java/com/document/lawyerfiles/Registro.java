@@ -325,7 +325,7 @@ public class Registro extends AppCompatActivity {
         stringRequest.setRetryPolicy(policy);
         requestQueue.add(stringRequest);
 
-    }
+}
 
     private void cargardatos2(String dni) {
 

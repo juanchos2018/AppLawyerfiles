@@ -17,6 +17,7 @@ import android.widget.Button;
 
 import com.document.lawyerfiles.R;
 import com.document.lawyerfiles.activitys.Consultas2Activity;
+import com.document.lawyerfiles.activitys.Consultas3Activity;
 import com.document.lawyerfiles.activitys.ConsultasActivity;
 
 public class ConsultasFragment extends Fragment {
@@ -48,8 +49,20 @@ public class ConsultasFragment extends Fragment {
                 consulta2();
             }
         });
+        card3=(CardView)vista.findViewById(R.id.idcar3);
+
+        card3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ircansutla3();
+            }
+        });
 
         return vista;
+    }
+
+    private void ircansutla3() {
+        startActivity(new Intent(getContext(), Consultas3Activity.class));
     }
 
     private void consulta2() {
