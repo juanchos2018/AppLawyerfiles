@@ -245,10 +245,20 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
 
             String mimeType = getContentResolver().getType(uri);
             Cursor returnCursor = getContentResolver().query(uri, null, null, null, null);
+            returnCursor.moveToFirst();
 
             int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-            returnCursor.moveToFirst();
+            int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
+
+            String peso=Long.toString(returnCursor.getLong(sizeIndex));
             nombrearchivo=returnCursor.getString(nameIndex);
+
+            long fileSizeInKB = returnCursor.getLong(sizeIndex) / 1024;
+
+            Log.e("peso bytes ",peso);
+            Log.e("peso Kb ",String.valueOf(fileSizeInKB));
+            String size=String.valueOf(fileSizeInKB);
+
             String tipo= getExtension(nombrearchivo);
 
             switch (tipo){
@@ -270,6 +280,14 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
                 case "doc":
                     tipodocumento="file";
                     tipoarchivo="doc";
+                case "xls":
+                    tipodocumento="file";
+                    tipoarchivo="xls";
+                    break;
+                case "xlsx":
+                    tipodocumento="file";
+                    tipoarchivo="xls";
+
 
                     break;
                 case "docx":
@@ -304,6 +322,8 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
                     tipodocumento="img";
                     tipoarchivo="img";
                     break;
+
+
                 default:
                     tipodocumento="desconocido";
                     tipoarchivo="desconociddo";
@@ -312,7 +332,7 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
 
             }
 
-            previus(tipodocumento,uri,nombrearchivo,tipoarchivo);
+            previus(tipodocumento,uri,nombrearchivo,tipoarchivo,size);
             // if (tipoarchivo.equals("img")){
             //    // guardarimagen(tipodocumento);
             // }
@@ -326,21 +346,27 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
             Toast.makeText(this, "No seleciono un archivo", Toast.LENGTH_SHORT).show();
         }
     }
-    private void previus(final String tipodocumento, final Uri uri, final String nombrearchivo, final String tipoarchivo){
+    private void previus(final String tipodocumento, final Uri uri, final String nombrearchivo, final String tipoarchivo ,String peso){
         builder1 = new AlertDialog.Builder(this);
         Button btcerrrar,btnsaves;
         final ImageView imgprevia;
 
         builder1.setTitle("Archivo");
         final TextView etnombre;
+        final TextView txtpeso;
+
         View v = LayoutInflater.from(this).inflate(R.layout.dialogo_archivo, null);
 
         builder1.setView(v);
         btcerrrar=(Button)v.findViewById(R.id.id_btncancel);
+
         btnsaves=(Button)v.findViewById(R.id.id_btnsave) ;
         imgprevia=(ImageView)v.findViewById(R.id.id_imgprevia);
         etnombre=(TextView)v.findViewById(R.id.id_tv_nombrearchivo1);
-        switch (tipodocumento){
+        txtpeso=(TextView)v.findViewById(R.id.id_sizefile);
+        txtpeso.setText(peso+" Kb");
+
+        switch (tipoarchivo){
             case "doc":
                 imgprevia.setImageResource(R.drawable.logow1);
                 break;
@@ -355,6 +381,12 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
                 break;
             case "pdf":
                 imgprevia.setImageResource(R.drawable.logopdf);
+                break;
+            case "xls":
+                imgprevia.setImageResource(R.drawable.ic_excel);
+                break;
+            case "xlsx":
+                imgprevia.setImageResource(R.drawable.ic_excel);
                 break;
             case "img":
                 imgprevia.setImageURI(uri);
@@ -382,7 +414,7 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos);
                     byte[] path = baos.toByteArray();
-                    guardarimagen(tipodocumento,nombrearchivo,path);
+                    guardarimagen(tipodocumento,nombrearchivo,path,txtpeso.getText().toString());
                 }
                 else {
                     Toast.makeText(ListaArchivos.this, "Nohay  nigun archivo we", Toast.LENGTH_SHORT).show();
@@ -480,7 +512,7 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
 
         }
     }
-    private void guardarimagen(final String tipodocumento, final String nombrearhivo, byte[] path) {
+    private void guardarimagen(final String tipodocumento, final String nombrearhivo, byte[] path, final String peso) {
 
         if (TextUtils.isEmpty(tipodocumento)){
             Toast.makeText(this, "falta docuemnto we", Toast.LENGTH_SHORT).show();
@@ -527,7 +559,7 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
 
                                 String key  = referencearchivos.push().getKey();
 
-                                ClsArchivos obj= new ClsArchivos(key,nombrearhivo,tipodocumento,tipoarchivo,"12",fecha,dowloand.toString(),"");
+                                ClsArchivos obj= new ClsArchivos(key,nombrearhivo,tipodocumento,tipoarchivo,peso,fecha,dowloand.toString(),"");
                                 referencearchivos.child(key).setValue(obj);
                             } else {
                                 Toast.makeText(ListaArchivos.this, "Error ", Toast.LENGTH_SHORT).show();

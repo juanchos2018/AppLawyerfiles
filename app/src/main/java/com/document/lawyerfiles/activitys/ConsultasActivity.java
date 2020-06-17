@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -64,6 +65,12 @@ public class ConsultasActivity extends AppCompatActivity {
     private void buscardni(final String dni) {
 
 
+        if(TextUtils.isEmpty(dni)){
+            etdni.setError("campo reqierodo");
+        }
+        else {
+
+
         progressDialog =new ProgressDialog(this);
         progressDialog.setTitle("Consultando");
         progressDialog.setMessage("Espera We ....");
@@ -108,5 +115,6 @@ public class ConsultasActivity extends AppCompatActivity {
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         stringRequest1.setRetryPolicy(policy);
         requestQueue2.add(stringRequest1);
+        }
     }
 }

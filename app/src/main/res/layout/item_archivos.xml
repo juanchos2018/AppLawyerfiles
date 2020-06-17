@@ -41,7 +41,7 @@
         android:layout_height="match_parent">
        <TextView
            android:text="ajsdfjsdhfjsd.jpg"
-           android:textSize="18sp"
+           android:textSize="16sp"
            android:textStyle="bold"
            android:id="@+id/id_tv_nombrearchivo"
            android:layout_width="match_parent"
@@ -52,6 +52,15 @@
             android:text="fecga"
             android:layout_gravity="left"
             android:id="@+id/id_tvfecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <TextView
+            android:text="peso"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:id="@+id/id_tvpeso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 

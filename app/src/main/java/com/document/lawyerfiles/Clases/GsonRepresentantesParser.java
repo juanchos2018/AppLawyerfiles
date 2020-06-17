@@ -11,8 +11,10 @@ import java.util.List;
 
 public class GsonRepresentantesParser {
 
+
     public List<ClsRepresentantes> leerFlujoJson(InputStream in) throws IOException {
         // Nueva instancia de la clase Gson
+
         Gson gson = new Gson();
 
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
@@ -27,6 +29,10 @@ public class GsonRepresentantesParser {
         }
         reader.endArray();
         reader.close();
+
+
         return animales;
     }
+
+
 }

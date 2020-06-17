@@ -130,7 +130,7 @@ public class Consultas3Activity extends AppCompatActivity {
                     // Parsear el flujo con formato JSON
                     InputStream in = new BufferedInputStream(con.getInputStream());
 
-                    // JsonAnimalParser parser = new JsonAnimalParser();
+
                     GsonRepresentantesParser parser = new GsonRepresentantesParser();
                     animales = parser.leerFlujoJson(in);
                 }
