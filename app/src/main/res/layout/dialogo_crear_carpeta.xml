@@ -20,10 +20,10 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:text="Crear CArpeta"
+                android:text="Carpeta Nueva"
                 android:layout_gravity="center"
                 android:textStyle="bold"
-                android:textSize="19sp"
+                android:textSize="17sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="50dp">
@@ -38,14 +38,29 @@
 
     </EditText>
 
-    <Button
-        android:id="@+id/id_btnagregarcarpeta"
-        android:text="Agregar"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+              android:gravity="right|center"
+                android:layout_height="wrap_content">
+                <Button
 
-    </Button>
+                    android:text="Cerrar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </Button>
+                <Button
+                    android:id="@+id/id_btnagregarcarpeta"
+                    android:text="crear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </Button>
+
+            </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

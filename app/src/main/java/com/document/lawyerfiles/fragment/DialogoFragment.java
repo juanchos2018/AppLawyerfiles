@@ -2,6 +2,8 @@ package com.document.lawyerfiles.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +33,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 public class DialogoFragment extends BottomSheetDialogFragment {
 
 
@@ -37,6 +42,7 @@ public class DialogoFragment extends BottomSheetDialogFragment {
     public String ruta_archivo;
     public String tipo_documento;
     public String tipo_archivo;
+    public String pes_archivo;
     private static final int CODIGO_PERMISO_ESCRIBIR_ALMACENAMIENTO = 1;
     private static final int ALTURA_CODIGO = 500, ANCHURA_CODIGO = 500;
 
@@ -61,9 +67,18 @@ public class DialogoFragment extends BottomSheetDialogFragment {
     @Override
     public void setupDialog(Dialog dialog, int style) {
         final View contentView = View.inflate(getContext(), R.layout.fragment_dialogo, null);
-        Button btn=(Button)contentView.findViewById(R.id.btonmensaje);
-        Button btn2 =(Button)contentView.findViewById(R.id.btncompartir);
-        Button btn3 =(Button)contentView.findViewById(R.id.btdesscarga);
+        TextView txtdescargar,txtcompartir,txtmover,txtcompiarviculo,txtqr,txteliminar;
+
+        //  Button btn=(Button)contentView.findViewById(R.id.btonmensaje);
+        //Button btn2 =(Button)contentView.findViewById(R.id.btncompartir);
+        //Button btn3 =(Button)contentView.findViewById(R.id.btdesscarga);
+
+        txtdescargar=(TextView)contentView.findViewById(R.id.id_tvdescargar);
+        txtcompartir=(TextView)contentView.findViewById(R.id.id_tvcompartir);
+        txtqr=(TextView)contentView.findViewById(R.id.id_tvqr);
+        txtcompiarviculo=(TextView)contentView.findViewById(R.id.id_tvcopiar);
+        txtmover=(TextView)contentView.findViewById(R.id.id_tvmover);
+        txteliminar=(TextView)contentView.findViewById(R.id.tv_eliminar);
 
         TextView nombrearchivo;
         ImageView imgg;
@@ -85,10 +100,17 @@ public class DialogoFragment extends BottomSheetDialogFragment {
             case "pptx":
                 imgg.setImageResource(R.drawable.logoppt);
                 break;
+            case "xls":
+                imgg.setImageResource(R.drawable.ic_excel);
+                break;
+            case "xlsx":
+                imgg.setImageResource(R.drawable.ic_excel);
+                break;
         }
 
         nombrearchivo=(TextView)contentView.findViewById(R.id.idnombrearchivo);
         nombrearchivo.setText(nombredearchivo);
+        /*
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,38 +118,67 @@ public class DialogoFragment extends BottomSheetDialogFragment {
             }
         });
 
-        btn2.setOnClickListener(new View.OnClickListener() {
+         */
+        txtqr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //   mListener.onButtonclick("desde el framentedshet");
+                mensaje(nombredearchivo);
+            }
+        });
+        txtcompiarviculo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Toast.makeText(getContext(), "Copiado ", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        txtmover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "moveraotra carpeta", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        txteliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "para eliminar we", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        txtcompartir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent=new Intent(getContext(), Enviar_archivosActivity.class);
-
                 Bundle bundle= new Bundle();
                 bundle.putString("name",nombredearchivo);
                 bundle.putString("ruta",ruta_archivo);
                 bundle.putString("tipo_doc",tipo_documento);
                 bundle.putString("tipo_arc",tipo_archivo);
+                bundle.putString("peso_arc",pes_archivo);
                 intent.putExtras(bundle);
                 startActivity(intent);
-
                 dismiss();
             }
         });
 
+        /*
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onButtonclick(ruta_archivo);
 
-                //  if (tipo_documento.equals("file")){
-                //      Descargar(ruta_archivo);
-                //  }
-                //  else if (tipo_documento.equals("img")){
-                //         mListener.onButtonclick(ruta_archivo);
-                //  }
 
+            }
+        });
 
+         */
+
+        txtdescargar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onButtonclick(ruta_archivo);
             }
         });
         dialog.setContentView(contentView);

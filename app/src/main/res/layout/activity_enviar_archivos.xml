@@ -27,8 +27,8 @@
                 <ImageView
                     android:id="@+id/id_imgearchivo"
                     android:src="@mipmap/ic_launcher"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp">
+                    android:layout_width="50dp"
+                    android:layout_height="50dp">
 
                 </ImageView>
                 <TextView

@@ -56,12 +56,23 @@
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:layout_height="match_parent">
+
+            <GridView
+                android:id="@+id/simpleGridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="2"/>
+
+            <!--
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recylcercarpetas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+            -->
         </LinearLayout>
 
     </LinearLayout>

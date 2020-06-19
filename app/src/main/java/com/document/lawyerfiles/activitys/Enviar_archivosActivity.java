@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ClipboardManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,11 +50,12 @@ public class Enviar_archivosActivity extends AppCompatActivity {
         imgg=(ImageView)findViewById(R.id.id_imgearchivo);
         txtnombre=(TextView)findViewById(R.id.id_etnombrearchhivo);
 
-
         nombre_archivo=getIntent().getStringExtra("name");
         ruta_archivo  =getIntent().getStringExtra("ruta");
         tipo_docu =getIntent().getStringExtra("tipo_doc");
         tipo_archi =getIntent().getStringExtra("tipo_arc");
+        peso_archivo=getIntent().getStringExtra("peso_arc");
+
         txtnombre.setText(nombre_archivo);
 
         mAuth = FirebaseAuth.getInstance();
@@ -76,6 +78,17 @@ public class Enviar_archivosActivity extends AppCompatActivity {
             case "pptx":
                 imgg.setImageResource(R.drawable.logoppt);
                 break;
+
+            case "xls":
+                imgg.setImageResource(R.drawable.ic_excel);
+                break;
+            case "xlsx":
+                imgg.setImageResource(R.drawable.ic_excel);
+                break;
+            case "img":
+                imgg.setImageResource(R.drawable.ic_foto);
+                break;
+
         }
 
         reference2= FirebaseDatabase.getInstance().getReference("Usuarios").child(id_usuario);
@@ -126,10 +139,10 @@ public class Enviar_archivosActivity extends AppCompatActivity {
                             items.btnenviar.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-
-                                    referenceBandeja=FirebaseDatabase.getInstance().getReference("Bandeja").child(id_usu);
+                                   // ClipboardManager
+                                            referenceBandeja=FirebaseDatabase.getInstance().getReference("Bandeja").child(id_usu);
                                     String key =referenceBandeja.push().getKey();
-                                    ClsEnvios o=new ClsEnvios(key,id_usu,nombre_archivo,ruta_archivo,"10mv",tipo_docu,tipo_archi,"23-23-23");
+                                    ClsEnvios o=new ClsEnvios(key,id_usu,nombre_archivo,ruta_archivo,peso_archivo,tipo_docu,tipo_archi,"23-23-23");
                                     referenceBandeja.child(key).setValue(o).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -139,7 +152,7 @@ public class Enviar_archivosActivity extends AppCompatActivity {
 
 
 
-                                    Toast.makeText(Enviar_archivosActivity.this, "listo para enviar we", Toast.LENGTH_SHORT).show();
+                                //    Toast.makeText(Enviar_archivosActivity.this, "listo para enviar we", Toast.LENGTH_SHORT).show();
                                 }
                             });
 

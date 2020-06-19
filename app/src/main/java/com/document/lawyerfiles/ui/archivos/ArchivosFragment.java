@@ -22,8 +22,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,7 @@ import android.widget.Toast;
 import com.document.lawyerfiles.Clases.ClsCarpetas;
 import com.document.lawyerfiles.R;
 import com.document.lawyerfiles.activitys.ListaArchivos;
+import com.document.lawyerfiles.adapters.AdapterCarpetas;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,11 +45,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -67,6 +72,10 @@ public class ArchivosFragment extends Fragment {
     android.app.AlertDialog.Builder builder1;
     AlertDialog alert;
     String user_id;
+
+    GridView simpleList;
+    ArrayList<ClsCarpetas> birdList=new ArrayList<>();
+
     public static ArchivosFragment newInstance() {
         return new ArchivosFragment();
     }
@@ -89,9 +98,10 @@ public class ArchivosFragment extends Fragment {
         user_id = mAuth.getCurrentUser().getUid();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         referencecarpetas= FirebaseDatabase.getInstance().getReference("Archivos").child(user_id);
-
-        recyclerView=vista.findViewById(R.id.recylcercarpetas);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        simpleList=(GridView)vista.findViewById(R.id.simpleGridView);
+        birdList = new ArrayList<>();
+       // recyclerView=vista.findViewById(R.id.recylcercarpetas);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         if(solicitaPermisosVersionesSuperiores()){
 
         }
@@ -165,6 +175,44 @@ public class ArchivosFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        Query q=referencecarpetas;
+        q.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                birdList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    ClsCarpetas artist = postSnapshot.getValue(ClsCarpetas.class);
+                    birdList.add(artist);
+                }
+                //AdapterCarpetas2 myAdapter=new AdapterCarpetas2(ListaArchivos3Activity.this,R.layout.grid_view_items,birdList);
+                AdapterCarpetas myAdapter=new AdapterCarpetas(getActivity(),birdList);
+                simpleList.setAdapter(myAdapter);
+                simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
+                        Intent intent=new Intent(getContext(), ListaArchivos.class);
+                        Bundle bundle= new Bundle();
+                        bundle.putString("key",birdList.get(position).getId_carpeta());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        // Toast.makeText(ListaArchivos3Activity.this,  + position + " " + birdList.get(position).getId_carpeta(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        /*
         FirebaseRecyclerOptions<ClsCarpetas> recyclerOptions = new FirebaseRecyclerOptions.Builder<ClsCarpetas>()
                 .setQuery(referencecarpetas, ClsCarpetas.class).build();
         FirebaseRecyclerAdapter<ClsCarpetas,Items> adapter =new FirebaseRecyclerAdapter<ClsCarpetas, Items>(recyclerOptions) {
@@ -221,6 +269,8 @@ public class ArchivosFragment extends Fragment {
         };
         recyclerView.setAdapter(adapter);
         adapter.startListening();
+
+         */
 
     }
 

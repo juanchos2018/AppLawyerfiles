@@ -8,7 +8,7 @@
     tools:context=".fragment.DialogoFragment">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@color/colorBackground"
         android:orientation="vertical">
@@ -24,8 +24,8 @@
                 android:padding="5dp"
                 android:src="@drawable/logow1"
                 android:id="@+id/imgprevia"
-                android:layout_width="100dp"
-                android:layout_height="100dp">
+                android:layout_width="50dp"
+                android:layout_height="50dp">
 
             </ImageView>
             <TextView
@@ -39,13 +39,85 @@
                 android:layout_height="wrap_content">
             </TextView>
 
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_below="@id/la1"
-            android:gravity="right"
-
+            android:orientation="vertical"
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <View
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="0.10dp"
+                android:background="@color/gray" />
+
+            <TextView
+                android:id="@+id/id_tvdescargar"
+                android:text="   Descargar"
+                android:layout_marginTop="9dp"
+                android:textStyle="bold"
+                android:drawableLeft="@drawable/ic_download"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:id="@+id/id_tvcompartir"
+                android:text="   Compartir"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_compartir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/id_tvmover"
+                android:text="   Mover"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_move"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/id_tvcopiar"
+                android:text="   Copiar Vinculo"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_copy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/id_tvqr"
+                android:text="   Mostrar Qr"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_qr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_eliminar"
+                android:text="   Eliminar"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TextView>
             <Button
                 android:id="@+id/btdesscarga"
                 android:text="Descargar"
@@ -69,27 +141,7 @@
             android:text="Select Address" />
             -->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_weight="2"
-            android:layout_alignParentBottom="true"
-            android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/btonmensaje"
-                android:text="Mostrar Qr"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </Button>
-            <Button
-                android:id="@+id/btncompartir"
-                android:text="Compartir"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </Button>
-        </LinearLayout>
 
     </RelativeLayout>
 

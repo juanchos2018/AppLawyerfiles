@@ -107,6 +107,12 @@ public class BandejaFragment extends Fragment implements DialogoFragment2.Booton
                             if (tipo_archivo.equals("img")){
                                 items.imgfoto.setImageResource(R.drawable.ic_foto);
                             }
+                            if (tipo_archivo.equals("xsl")){
+                                items.imgfoto.setImageResource(R.drawable.ic_excel);
+                            }
+                            if (tipo_archivo.equals("xslx")){
+                                items.imgfoto.setImageResource(R.drawable.ic_excel);
+                            }
                             items.itemView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {

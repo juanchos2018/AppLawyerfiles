@@ -240,6 +240,7 @@ public class Registro extends AppCompatActivity {
         //   String dni=et_dni.getText().toString();
         String api_represetnatees_legales="https://quertium.com/api/v1/sunat/legals/20134052989?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.MTM3Mw.x-jUgUBcJukD5qZgqvBGbQVMxJFUAIDroZEm4Y9uTyg";
 
+        String Url_placa="http://pe.placaapi.com/api/reg.asmx/CheckPeru?RegistrationNumber=v5z121&username=juancarkis";
         String URL="https://api.reniec.cloud/dni/"+dni;
         //  final String URL2="https://quertium.com/api/v1/reniec/dni/45713875?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.MTM3Mw.x-jUgUBcJukD5qZgqvBGbQVMxJFUAIDroZEm4Y9uTyg";
         String  api_ruc="https://quertium.com/api/v1/sunat/ruc/20159981216?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.MTM3Mw.x-jUgUBcJukD5qZgqvBGbQVMxJFUAIDroZEm4Y9uTyg";

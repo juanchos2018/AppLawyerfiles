@@ -160,8 +160,11 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
                             final String ruta=dataSnapshot.child("ruta_archivo").getValue().toString();
                             final String tipo_documento=dataSnapshot.child("tipo_documento").getValue().toString();
                             final String tipo_archivo=dataSnapshot.child("tipo_archivo").getValue().toString();
+                            final String peso_archivo=dataSnapshot.child("peso_archivo").getValue().toString();
                             items.txtnombrefile.setText(nombre_carpeta);
                             items.txtfecha.setText(fecha);
+                            items.txtpeso.setText(peso_archivo);
+
 
                             if (tipo_archivo.equals("ppt")){
                                 items.imgfoto.setImageResource(R.drawable.logoppt);
@@ -192,6 +195,8 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
                                     bottomSheetDialog.ruta_archivo=ruta;
                                     bottomSheetDialog.tipo_documento=tipo_documento;
                                     bottomSheetDialog.tipo_archivo=tipo_archivo;
+                                    bottomSheetDialog.pes_archivo=peso_archivo;
+
 //
                                     bottomSheetDialog.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
                                 }
@@ -223,7 +228,7 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
 
     }
     public  static class Items extends RecyclerView.ViewHolder {
-        TextView txtnombrefile, txtfecha, txtcantidad;
+        TextView txtnombrefile, txtfecha, txtcantidad,txtpeso;
         ImageView imgfoto;
 
         public Items(@NonNull View itemView) {
@@ -231,6 +236,7 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
             txtnombrefile = (TextView) itemView.findViewById(R.id.id_tv_nombrearchivo);
             txtfecha = (TextView) itemView.findViewById(R.id.id_tvfecha);
             imgfoto = (ImageView) itemView.findViewById(R.id.id_imgtipofoto);
+            txtpeso=(TextView)itemView.findViewById(R.id.id_tvpeso);
 
 
         }
@@ -287,8 +293,6 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
                 case "xlsx":
                     tipodocumento="file";
                     tipoarchivo="xls";
-
-
                     break;
                 case "docx":
                     tipodocumento="file";

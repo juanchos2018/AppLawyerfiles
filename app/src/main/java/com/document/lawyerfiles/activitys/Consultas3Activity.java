@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -81,6 +83,12 @@ public class Consultas3Activity extends AppCompatActivity {
         });
     }
 
+    private void a(){
+        TextView tv;
+        ClipData clip = ClipData.newPlainText("text", "Texto copiado al portapapeles");
+        ClipboardManager clipboard = (ClipboardManager)this.getSystemService(CLIPBOARD_SERVICE);
+        clipboard.setPrimaryClip(clip);
+    }
     private void buscarsi(String ruc) {
         lista= (ListView) findViewById(R.id.listaAnimales);
         if (TextUtils.isEmpty(ruc)){
@@ -129,8 +137,6 @@ public class Consultas3Activity extends AppCompatActivity {
 
                     // Parsear el flujo con formato JSON
                     InputStream in = new BufferedInputStream(con.getInputStream());
-
-
                     GsonRepresentantesParser parser = new GsonRepresentantesParser();
                     animales = parser.leerFlujoJson(in);
                 }
