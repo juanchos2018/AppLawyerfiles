@@ -49,7 +49,9 @@ public class DialogoFragment extends BottomSheetDialogFragment {
     android.app.AlertDialog.Builder builder1;
     AlertDialog alert;
 
+    Context context;
     private BootonClickLisntener mListener;
+    //private  BootomClopiarListener mlister2;
 
     public DialogoFragment() {
         // Required empty public constructor
@@ -129,7 +131,8 @@ public class DialogoFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getContext(), "Copiado ", Toast.LENGTH_SHORT).show();
+           // String ulr=ruta_archivo;
+            mListener.copiartexto(ruta_archivo);
             }
         });
 
@@ -179,6 +182,7 @@ public class DialogoFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 mListener.onButtonclick(ruta_archivo);
+
             }
         });
         dialog.setContentView(contentView);
@@ -248,8 +252,12 @@ public class DialogoFragment extends BottomSheetDialogFragment {
 
     public  interface  BootonClickLisntener{
         void  onButtonclick(String texto);
+        void  copiartexto(String a);
     }
 
+  // public  interface BootomClopiarListener{
+  //     void  oncopi(String texto);
+  // }
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);

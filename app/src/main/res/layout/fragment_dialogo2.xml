@@ -4,16 +4,138 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".fragment.DialogoFragment">
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@color/colorBackground"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/la1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:padding="5dp"
+                    android:src="@drawable/logow1"
+                    android:id="@+id/imgprevia"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp">
+
+                </ImageView>
+                <TextView
+                    android:id="@+id/idnombrearchivo"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="hosdasdf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </TextView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_below="@id/la1"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.10dp"
+                    android:background="@color/gray" />
+
+                <TextView
+                    android:id="@+id/id_tvdescargar"
+                    android:text="   Descargar"
+                    android:layout_marginTop="9dp"
+                    android:textStyle="bold"
+                    android:drawableLeft="@drawable/ic_download"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/id_tvcompartir"
+                    android:text="   Compartir"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    android:drawableLeft="@drawable/ic_compartir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/id_tvmover"
+                    android:text="   Mover"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    android:drawableLeft="@drawable/ic_move"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/id_tvcopiar"
+                    android:text="   Copiar Vinculo"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    android:drawableLeft="@drawable/ic_copy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/id_tvqr"
+                    android:text="   Mostrar Qr"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    android:drawableLeft="@drawable/ic_qr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tv_eliminar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:drawableLeft="@drawable/ic_delete"
+                    android:text="   Eliminar"
+                    android:textStyle="bold">
+
+                </TextView>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!--
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_margin="5dp"
         android:background="@color/colorBackground"
         android:orientation="vertical">
-
-
         <LinearLayout
             android:id="@+id/la1"
             android:orientation="horizontal"
@@ -55,19 +177,6 @@
             </Button>
         </LinearLayout>
 
-        <!--
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/colorBackground"
-            android:background="@drawable/btn_border2"
-            android:layout_margin="10dp"
-            android:layout_alignParentBottom="true"
-
-
-            android:text="Select Address" />
-            -->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,4 +202,5 @@
 
     </RelativeLayout>
 
+-->
 </LinearLayout>

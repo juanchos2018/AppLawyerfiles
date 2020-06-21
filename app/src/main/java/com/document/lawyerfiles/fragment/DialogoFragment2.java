@@ -58,11 +58,20 @@ public class DialogoFragment2 extends BottomSheetDialogFragment {
     @Override
     public void setupDialog(Dialog dialog, int style) {
         final View contentView = View.inflate(getContext(), R.layout.fragment_dialogo2, null);
-        Button btn=(Button)contentView.findViewById(R.id.btonmensaje);
-        Button btn2 =(Button)contentView.findViewById(R.id.btncompartir);
-        Button btn3 =(Button)contentView.findViewById(R.id.btdesscarga);
+        TextView txtdescargar,txtcompartir,txtmover,txtcompiarviculo,txtqr,txteliminar;
+      //  Button btn=(Button)contentView.findViewById(R.id.btonmensaje);
+        //Button btn2 =(Button)contentView.findViewById(R.id.btncompartir);
+        //Button btn3 =(Button)contentView.findViewById(R.id.btdesscarga);
 
         // Toast.makeText(getContext(), ruta_archivo, Toast.LENGTH_SHORT).show();
+
+        txtdescargar=(TextView)contentView.findViewById(R.id.id_tvdescargar);
+        txtcompartir=(TextView)contentView.findViewById(R.id.id_tvcompartir);
+        txtqr=(TextView)contentView.findViewById(R.id.id_tvqr);
+        txtcompiarviculo=(TextView)contentView.findViewById(R.id.id_tvcopiar);
+        txtmover=(TextView)contentView.findViewById(R.id.id_tvmover);
+        txteliminar=(TextView)contentView.findViewById(R.id.tv_eliminar);
+
         TextView nombrearchivo;
         ImageView imgg;
         imgg=(ImageView)contentView.findViewById(R.id.imgprevia);
@@ -87,14 +96,15 @@ public class DialogoFragment2 extends BottomSheetDialogFragment {
 
         nombrearchivo=(TextView)contentView.findViewById(R.id.idnombrearchivo);
         nombrearchivo.setText(nombredearchivo);
-        btn.setOnClickListener(new View.OnClickListener() {
+
+        txtqr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mensaje(nombredearchivo);
             }
         });
 
-        btn2.setOnClickListener(new View.OnClickListener() {
+        txtcompartir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //   mListener.onButtonclick("desde el framentedshet");
@@ -112,12 +122,10 @@ public class DialogoFragment2 extends BottomSheetDialogFragment {
             }
         });
 
-        btn3.setOnClickListener(new View.OnClickListener() {
+        txtdescargar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Toast.makeText(getContext(), "ola", Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getContext(), ruta_archivo, Toast.LENGTH_SHORT).show();
-                // mListener.onButtonclick(ruta_archivo);
+
                 Descargar(ruta_archivo);
 
             }

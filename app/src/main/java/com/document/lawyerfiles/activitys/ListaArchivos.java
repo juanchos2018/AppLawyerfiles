@@ -13,6 +13,8 @@ import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,6 +58,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -114,17 +117,18 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
         keycarpeta=getIntent().getStringExtra("key");
         Log.e("ke",keycarpeta);
 
-        txtprueba=(TextView)findViewById(R.id.idtextotpueba);
-
-        referencearchivos= FirebaseDatabase.getInstance().getReference("Archivos2").child(keycarpeta);
-        recyclerView=findViewById(R.id.recylcercarchivos);
-        imgbutton=(ImageButton)findViewById(R.id.id_imgbutton);
-        imgbutton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = findViewById(R.id.fab5);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+
                 abrirgaleria();
             }
         });
+
+
+        referencearchivos= FirebaseDatabase.getInstance().getReference("Archivos2").child(keycarpeta);
+        recyclerView=findViewById(R.id.recylcercarchivos);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -641,6 +645,15 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
     @Override
     public void onButtonclick(String texto) {
         DescargarFoto(texto);
+    }
+
+    @Override
+    public void copiartexto(String a) {
+
+        ClipboardManager clipboardManager=(ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+        ClipData clip=ClipData.newPlainText("Editext",a);
+        clipboardManager.setPrimaryClip(clip);
+        Toast.makeText(this, "Copiado", Toast.LENGTH_SHORT).show();
     }
 
     private void DescargarFoto(String ruta) {

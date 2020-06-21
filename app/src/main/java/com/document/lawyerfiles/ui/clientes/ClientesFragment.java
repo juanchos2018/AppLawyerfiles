@@ -203,6 +203,9 @@ public class ClientesFragment extends Fragment {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             Date date = new Date();
             String fecha = dateFormat.format(date);
+            String name=getName(uri);
+            String primeraletra=String.valueOf(name.charAt(0));
+
             ClsClientes o =new ClsClientes(key,getName(uri),getPhone(uri),"","");
             referenceclientes.child(key).setValue(o).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -223,6 +226,7 @@ public class ClientesFragment extends Fragment {
     }
     private String getName(Uri uri) {
 
+        String primeraletra;
         String name = null;
         ContentResolver contentResolver = getActivity().getContentResolver();
         Cursor c = contentResolver.query(
@@ -236,6 +240,8 @@ public class ClientesFragment extends Fragment {
             name = c.getString(0);
         }
         c.close();
+
+        //primeraletra=String.valueOf( name.charAt(0));
         return name;
     }
     private String getPhone(Uri uri) {

@@ -16,9 +16,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activitys.Consultas3Activity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activitys.OlvideClaveActivity"></activity>
+        <activity android:name=".activitys.Consultas4Activity"></activity>
+        <activity android:name=".activitys.Consultas3Activity" />
         <activity android:name=".activitys.Login" />
         <activity android:name=".activitys.ListaArchivos" />
         <activity android:name=".activitys.Enviar_archivosActivity" />
@@ -40,7 +42,7 @@
             android:name=".Principal"
             android:label="@string/title_activity_principal"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

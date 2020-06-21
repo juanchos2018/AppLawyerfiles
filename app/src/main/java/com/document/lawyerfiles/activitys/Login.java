@@ -38,8 +38,7 @@ public class Login extends AppCompatActivity {
     private FirebaseUser user;
     private DatabaseReference userDatabaseReference;
     DatabaseReference reference,reference2;
-
-
+    TextView txtolvide;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +62,19 @@ public class Login extends AppCompatActivity {
                 registrarnuvo();
             }
         });
+
+        txtolvide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inrolvide();
+            }
+        });
+    }
+
+    private void inrolvide() {
+
+        startActivity(new Intent(Login.this,OlvideClaveActivity.class));
+
     }
 
 
@@ -72,6 +84,7 @@ public class Login extends AppCompatActivity {
         et_clave=(EditText)findViewById(R.id.inputPassword);
         btningresar=(Button)findViewById(R.id.loginButton);
         tv_registrar=(TextView)findViewById(R.id.registarse);
+        txtolvide=(TextView)findViewById(R.id.linkForgotPassword);
 
     }
     private void registrarnuvo() {

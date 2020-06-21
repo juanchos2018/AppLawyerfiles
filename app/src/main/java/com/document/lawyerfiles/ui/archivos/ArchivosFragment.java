@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import com.document.lawyerfiles.Clases.ClsCarpetas;
 import com.document.lawyerfiles.R;
 import com.document.lawyerfiles.activitys.ListaArchivos;
 import com.document.lawyerfiles.adapters.AdapterCarpetas;
+import com.document.lawyerfiles.adapters.AdapterCarpetas2;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -186,7 +188,8 @@ public class ArchivosFragment extends Fragment {
                     birdList.add(artist);
                 }
                 //AdapterCarpetas2 myAdapter=new AdapterCarpetas2(ListaArchivos3Activity.this,R.layout.grid_view_items,birdList);
-                AdapterCarpetas myAdapter=new AdapterCarpetas(getActivity(),birdList);
+              AdapterCarpetas myAdapter=new AdapterCarpetas(getActivity(),birdList);
+             //   AdapterCarpetas2 adapterCarpetas2=new AdapterCarpetas2(birdList);
                 simpleList.setAdapter(myAdapter);
                 simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

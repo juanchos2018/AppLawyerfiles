@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,29 +14,57 @@
         android:layout_height="match_parent">
 
 
-        <ImageButton
-            android:id="@+id/id_imgbutton"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_file"
-            android:layout_width="50dp"
-            android:layout_marginRight="20dp"
-            android:layout_height="50dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@color/bgAzul"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        </ImageButton>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/borde_3"
+                >
 
-        <TextView
-            android:id="@+id/idtextotpueba"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+                <cn.zhaiyifan.rememberedittext.RememberEditText
+                    android:id="@+id/idetbuscararchivo"
+                    android:layout_marginEnd="05dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_alignParentTop="true"
+                    android:hint="Buscar "
+                    android:inputType="textCapWords"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    app:autoFill="false"
+                    app:autoSave="true"
+                    app:rememberId="searchText"
+                    app:rememberCount="5"
+                    android:background="@drawable/borde_3"
+                    android:drawableLeft="@drawable/ic_search_black_24dp"
 
-        </TextView>
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recylcercarchivos"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
         </androidx.recyclerview.widget.RecyclerView>
 
+
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_add_reg" />
+</FrameLayout>
