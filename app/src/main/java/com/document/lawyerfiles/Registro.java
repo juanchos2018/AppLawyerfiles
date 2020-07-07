@@ -141,12 +141,14 @@ public class Registro extends AppCompatActivity {
             progressDialog.setMessage("Espera We ....");
             progressDialog.show();
             progressDialog.setCanceledOnTouchOutside(false);
+
             mAuth.createUserWithEmailAndPassword(correo,clave).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
                         String current_userID =  mAuth.getCurrentUser().getUid();
-                        reference = FirebaseDatabase.getInstance().getReference().child("Usuarios").child(current_userID);
+
+                        reference = FirebaseDatabase.getInstance().getReference("Usuarios").child(current_userID);
                         reference.child("id_usuario").setValue(current_userID);
                         reference.child("dni_usuario").setValue(dni);
                         reference.child("nombre_usuario").setValue(nombres);
@@ -154,7 +156,7 @@ public class Registro extends AppCompatActivity {
                         reference.child("correo_usuario").setValue(correo);
                         reference.child("cargo_usuario").setValue(cargo);
                         reference.child("image_usuario").setValue("defult_image");
-                        reference.child("created_at").setValue(ServerValue.TIMESTAMP).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        reference.child("created_at").setValue(ServerValue.TIMESTAMP) .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()){

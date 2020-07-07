@@ -125,20 +125,42 @@
 
 
             </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tvFormat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/tvresult"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </TextView>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/id_btnscanear"
-                    android:text="Escanear Codigo Qr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
 
-                </Button>
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/id_btnscanear"
+                        android:background="@drawable/logoqr"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp">
+
+                    </Button>
+
+                </LinearLayout>
+
+
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

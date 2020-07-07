@@ -1,6 +1,7 @@
 package com.document.lawyerfiles.ui.home;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.document.lawyerfiles.Clases.ClsClientes;
 import com.document.lawyerfiles.Clases.ClsColegas;
 import com.document.lawyerfiles.R;
+import com.document.lawyerfiles.activitys.MapaActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +27,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class HomeFragment extends Fragment {
 
@@ -35,6 +39,8 @@ public class HomeFragment extends Fragment {
     public FirebaseUser currentUser;
     private ProgressDialog progressDialog;
 
+    TextView txt1,txt2;
+
     TextView txtclientes,txtcolegas;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,6 +50,9 @@ public class HomeFragment extends Fragment {
         btnscanear=(Button)vista.findViewById(R.id.id_btnscanear);
         txtclientes=(TextView)vista.findViewById(R.id.idcantidaclases);
         txtcolegas=(TextView)vista.findViewById(R.id.idcantidcolegas);
+
+        txt1=(TextView)vista.findViewById(R.id.tvFormat);
+        txt2=(TextView)vista.findViewById(R.id.tvresult);
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -58,10 +67,7 @@ public class HomeFragment extends Fragment {
 
 
         }
-
-
-
-            btnscanear.setOnClickListener(new View.OnClickListener() {
+         btnscanear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 scanear();
@@ -71,9 +77,29 @@ public class HomeFragment extends Fragment {
     }
     private void scanear() {
 
-        Toast.makeText(getContext(), "Scaneae we", Toast.LENGTH_SHORT).show();
+        new IntentIntegrator(getActivity()).initiateScan();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        final IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode,resultCode,intent);
+        manipularResultado(intentResult);
+    }
+
+    private  void actualiarUITextViews(String resultadoScaneo,String formatoResultado){
+
+        txt1.setText(formatoResultado);
+        txt2.setText(resultadoScaneo);
+
+    }
+    private  void manipularResultado(IntentResult intentResult){
+        if(intentResult != null){
+
+            actualiarUITextViews(intentResult.getContents(),intentResult.getFormatName());
+        }else{
+            Toast.makeText(getContext(),"No se leyó nada",Toast.LENGTH_SHORT).show();
+        }
+    }
     @Override
     public void onStart() {
         super.onStart();

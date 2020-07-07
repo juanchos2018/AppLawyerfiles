@@ -37,7 +37,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,7 +51,10 @@ import com.airbnb.lottie.model.KeyPath;
 import com.airbnb.lottie.value.LottieFrameInfo;
 import com.airbnb.lottie.value.SimpleLottieValueCallback;
 import com.document.lawyerfiles.Clases.ClsArchivos;
+import com.document.lawyerfiles.Clases.ClsCarpetas;
 import com.document.lawyerfiles.R;
+import com.document.lawyerfiles.adapters.AdapterArchivos;
+import com.document.lawyerfiles.adapters.AdapterCarpetas;
 import com.document.lawyerfiles.fragment.DialogoFragment;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -64,6 +69,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -72,6 +78,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -97,12 +104,12 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
     String tipodocumento,tipoarchivo,correousuario;
     TextView txtprueba;
     String ruta_archivo_descargar;
-
+    GridView simpleList;
     private final int frames = 9;
     private int currentAnimationFrame = 0;
     private LottieAnimationView animationView;
 
-
+    ArrayList<ClsArchivos> birdList=new ArrayList<>();
     android.app.AlertDialog.Builder builder2;
     AlertDialog aler2;
     @Override
@@ -125,12 +132,12 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
                 abrirgaleria();
             }
         });
-
+        birdList = new ArrayList<>();
 
         referencearchivos= FirebaseDatabase.getInstance().getReference("Archivos2").child(keycarpeta);
-        recyclerView=findViewById(R.id.recylcercarchivos);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+       //recyclerView=findViewById(R.id.recylcercarchivos);
+        simpleList=(GridView)findViewById(R.id.simpleGridView1);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
     private void abrirgaleria() {
 
@@ -144,6 +151,49 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
     @Override
     protected void onStart() {
         super.onStart();
+
+        Query q=referencearchivos;
+        q.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                birdList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    ClsArchivos artist = postSnapshot.getValue(ClsArchivos.class);
+                    birdList.add(artist);
+                }
+
+                AdapterArchivos myAdapter=new AdapterArchivos(getApplicationContext(),birdList);
+
+                simpleList.setAdapter(myAdapter);
+                simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                        DialogoFragment bottomSheetDialog = DialogoFragment.newInstance();
+
+                        bottomSheetDialog.nombredearchivo= birdList.get(position).getNombre_archivo();
+                        bottomSheetDialog.ruta_archivo= birdList.get(position).getRuta_archivo();
+                        bottomSheetDialog.tipo_documento= birdList.get(position).getTipo_documento();
+                        bottomSheetDialog.tipo_archivo= birdList.get(position).getTipo_archivo();
+                        bottomSheetDialog.pes_archivo= birdList.get(position).getPeso_archivo();
+
+//
+                        bottomSheetDialog.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
+
+                        // Toast.makeText(ListaArchivos3Activity.this,  + position + " " + birdList.get(position).getId_carpeta(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        /*
+
 
         FirebaseRecyclerOptions<ClsArchivos> recyclerOptions = new FirebaseRecyclerOptions.Builder<ClsArchivos>()
                 .setQuery(referencearchivos, ClsArchivos.class).build();
@@ -229,6 +279,8 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
         };
         recyclerView.setAdapter(adapter);
         adapter.startListening();
+
+         */
 
     }
     public  static class Items extends RecyclerView.ViewHolder {
