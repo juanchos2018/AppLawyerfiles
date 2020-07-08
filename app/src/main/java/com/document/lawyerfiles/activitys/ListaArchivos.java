@@ -77,6 +77,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -89,7 +90,7 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
 
     private static final short REQUEST_CODE = 6545;
     FirebaseStorage storage;
-    private DatabaseReference referencearchivos;
+    private DatabaseReference referencearchivos,reference2;
     private FirebaseAuth mAuth;
     private StorageReference mStorageRef;
     private ProgressDialog progressDialog;
@@ -109,6 +110,7 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
     private int currentAnimationFrame = 0;
     private LottieAnimationView animationView;
 
+    private static final String TAG = "ListaArchivos";
     ArrayList<ClsArchivos> birdList=new ArrayList<>();
     android.app.AlertDialog.Builder builder2;
     AlertDialog aler2;
@@ -148,6 +150,28 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
         intent.setType("*/*");
         startActivityForResult(intent,86);
     }
+
+    private  void Abrir(File url){
+
+     //   try {
+            Uri uri = Uri.fromFile(url);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            if (url.toString().contains(".doc") || url.toString().contains(".docx")) {
+                // Word document
+                intent.setDataAndType(uri, "application/msword");
+            }else {
+                intent.setDataAndType(uri, "*/*");
+            }
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+     //   }catch (Exception ex){
+       //     Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+          //  Log.e(TAG, ex.getMessage() );
+        //}
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -169,15 +193,17 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
                     @Override
                     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                         DialogoFragment bottomSheetDialog = DialogoFragment.newInstance();
-
+                     //   File ulr =new File(birdList.get(position).getRuta_archivo());
+                       // Abrir(ulr);
+                        bottomSheetDialog.id_archivo=birdList.get(position).getId_archivo();
                         bottomSheetDialog.nombredearchivo= birdList.get(position).getNombre_archivo();
                         bottomSheetDialog.ruta_archivo= birdList.get(position).getRuta_archivo();
                         bottomSheetDialog.tipo_documento= birdList.get(position).getTipo_documento();
                         bottomSheetDialog.tipo_archivo= birdList.get(position).getTipo_archivo();
-                        bottomSheetDialog.pes_archivo= birdList.get(position).getPeso_archivo();
-
-//
+                        bottomSheetDialog.pes_archivo= birdList.get(position).getPeso_archivo();//
                         bottomSheetDialog.show(getSupportFragmentManager(), "Bottom Sheet Dialog Fragment");
+
+
 
                         // Toast.makeText(ListaArchivos3Activity.this,  + position + " " + birdList.get(position).getId_carpeta(), Toast.LENGTH_SHORT).show();
                     }
@@ -697,6 +723,7 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
     @Override
     public void onButtonclick(String texto) {
         DescargarFoto(texto);
+       // Abrir(texto);
     }
 
     @Override
@@ -706,6 +733,33 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
         ClipData clip=ClipData.newPlainText("Editext",a);
         clipboardManager.setPrimaryClip(clip);
         Toast.makeText(this, "Copiado", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void EliminarArchivo(String keyarchivo) {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Cargando..");
+        progressDialog.setTitle("Eliinando");
+
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        reference2= FirebaseDatabase.getInstance().getReference("Archivos2").child(keycarpeta).child(keyarchivo);
+        reference2.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if ( task.isSuccessful()){
+                    Toast.makeText(ListaArchivos.this, "Eliminado we", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                   // finish();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ListaArchivos.this, "ERror", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
     }
 
     private void DescargarFoto(String ruta) {

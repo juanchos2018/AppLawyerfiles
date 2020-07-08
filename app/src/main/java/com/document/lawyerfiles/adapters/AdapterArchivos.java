@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.document.lawyerfiles.Clases.ClsArchivos;
 import com.document.lawyerfiles.R;
 
@@ -72,7 +73,7 @@ public class AdapterArchivos  extends ArrayAdapter<ClsArchivos> {
             viewHolder.imgicnono.setImageResource(R.drawable.ico_wor3);
         }
 
-        if(al_menu.get(position).getTipo_archivo().equals("doc")){
+        if(al_menu.get(position).getTipo_archivo().equals("doc") ){
             viewHolder.img.setImageResource(R.drawable.fondodock);
             viewHolder.imgicnono.setImageResource(R.drawable.ico_wor3);
         }
@@ -80,6 +81,18 @@ public class AdapterArchivos  extends ArrayAdapter<ClsArchivos> {
         if(al_menu.get(position).getTipo_archivo().equals("ppt") || al_menu.get(position).getTipo_archivo().equals("pptx")){
             viewHolder.img.setImageResource(R.drawable.ppt_logo);
             viewHolder.imgicnono.setImageResource(R.drawable.ico_ppt2);
+        }
+
+        if(al_menu.get(position).getTipo_archivo().equals("img")){
+
+            Glide.with(getContext())
+                    .load(al_menu.get(position).getRuta_archivo())
+                    .placeholder(R.drawable.default_profile_image)
+                    .fitCenter()
+                    .error(R.drawable.default_profile_image)
+                    .centerCrop()
+                    .into(viewHolder.img);
+            viewHolder.imgicnono.setImageResource(R.drawable.ic_image);
         }
 
         viewHolder.tv_foldern.setText(al_menu.get(position).getNombre_archivo());

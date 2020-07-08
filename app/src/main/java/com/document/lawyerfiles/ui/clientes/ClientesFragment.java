@@ -126,9 +126,11 @@ public class ClientesFragment extends Fragment {
                         if (dataSnapshot.exists()){
                             final String nombre_cliente=dataSnapshot.child("nombre_cliente").getValue().toString();
                             final String celular=dataSnapshot.child("celular_cliente").getValue().toString();
-                            //    final String cantidad=dataSnapshot.child("cantidad_archivos").getValue().toString();
+                            final String caracter=dataSnapshot.child("caracter").getValue().toString();
                             items.txtnomcliente.setText(nombre_cliente);
                             items.txtcelular.setText(celular);
+                            items.txtcaracter.setText(caracter);
+
 
                         }
 
@@ -158,13 +160,14 @@ public class ClientesFragment extends Fragment {
     }
 
     public  static class Items extends RecyclerView.ViewHolder{
-        TextView txtnomcliente,txtcelular,txtcantidad;
+        TextView txtnomcliente,txtcelular,txtcaracter;
         ImageView imgfoto;
 
         public Items(@NonNull View itemView) {
             super(itemView);
             txtnomcliente=(TextView)itemView.findViewById(R.id.id_tvnombrecliente);
             txtcelular=(TextView)itemView.findViewById(R.id.id_tvcelularcliente);
+            txtcaracter=(TextView)itemView.findViewById(R.id.idcaracter);
 
 
 
@@ -204,9 +207,10 @@ public class ClientesFragment extends Fragment {
             Date date = new Date();
             String fecha = dateFormat.format(date);
             String name=getName(uri);
-            String primeraletra=String.valueOf(name.charAt(0));
+            String caracter=String.valueOf(name.charAt(0));
 
-            ClsClientes o =new ClsClientes(key,getName(uri),getPhone(uri),"","");
+
+            ClsClientes o =new ClsClientes(key,caracter,getName(uri),getPhone(uri),"","");
             referenceclientes.child(key).setValue(o).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

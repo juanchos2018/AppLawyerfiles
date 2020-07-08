@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 
 import com.document.lawyerfiles.R;
 import com.document.lawyerfiles.activitys.Enviar_archivosActivity;
+import com.document.lawyerfiles.activitys.MoverCarpetaActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import net.glxn.qrgen.android.QRCode;
@@ -43,6 +44,7 @@ public class DialogoFragment extends BottomSheetDialogFragment {
     public String tipo_documento;
     public String tipo_archivo;
     public String pes_archivo;
+    public String id_archivo;
     private static final int CODIGO_PERMISO_ESCRIBIR_ALMACENAMIENTO = 1;
     private static final int ALTURA_CODIGO = 500, ANCHURA_CODIGO = 500;
 
@@ -71,9 +73,7 @@ public class DialogoFragment extends BottomSheetDialogFragment {
         final View contentView = View.inflate(getContext(), R.layout.fragment_dialogo, null);
         TextView txtdescargar,txtcompartir,txtmover,txtcompiarviculo,txtqr,txteliminar;
 
-        //  Button btn=(Button)contentView.findViewById(R.id.btonmensaje);
-        //Button btn2 =(Button)contentView.findViewById(R.id.btncompartir);
-        //Button btn3 =(Button)contentView.findViewById(R.id.btdesscarga);
+
 
         txtdescargar=(TextView)contentView.findViewById(R.id.id_tvdescargar);
         txtcompartir=(TextView)contentView.findViewById(R.id.id_tvcompartir);
@@ -139,6 +139,16 @@ public class DialogoFragment extends BottomSheetDialogFragment {
         txtmover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent =new Intent(getContext(), MoverCarpetaActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("id_archivo",id_archivo);
+                bundle.putString("name",nombredearchivo);
+                bundle.putString("ruta",ruta_archivo);
+                bundle.putString("tipo_doc",tipo_documento);
+                bundle.putString("tipo_arc",tipo_archivo);
+                bundle.putString("peso_arc",pes_archivo);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 Toast.makeText(getContext(), "moveraotra carpeta", Toast.LENGTH_SHORT).show();
             }
         });
@@ -147,6 +157,9 @@ public class DialogoFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "para eliminar we", Toast.LENGTH_SHORT).show();
+                mListener.EliminarArchivo(id_archivo);
+
+
             }
         });
 
@@ -253,6 +266,8 @@ public class DialogoFragment extends BottomSheetDialogFragment {
     public  interface  BootonClickLisntener{
         void  onButtonclick(String texto);
         void  copiartexto(String a);
+        void  EliminarArchivo(String keyarchivo);
+
     }
 
   // public  interface BootomClopiarListener{
