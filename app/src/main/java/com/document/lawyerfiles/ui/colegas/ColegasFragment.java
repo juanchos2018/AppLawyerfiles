@@ -3,8 +3,13 @@ package com.document.lawyerfiles.ui.colegas;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,15 +21,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.document.lawyerfiles.Clases.ClsColegas;
 import com.document.lawyerfiles.Clases.ClsUsuarios;
 import com.document.lawyerfiles.R;
 import com.document.lawyerfiles.activitys.BuscarColegasActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,6 +54,10 @@ public class ColegasFragment extends Fragment {
     String id_usuario,nombre_usuario,foto_usuario;
     private DatabaseReference reference,reference2;
     RecyclerView recyclerView;
+
+    android.app.AlertDialog.Builder builder1;
+    AlertDialog alert;
+
     public static ColegasFragment newInstance() {
         return new ColegasFragment();
     }
@@ -113,7 +128,7 @@ public class ColegasFragment extends Fragment {
                         if (dataSnapshot.exists()){
                             final String correo=dataSnapshot.child("correo_usuario").getValue().toString();
                             final String nombre=dataSnapshot.child("nombre_usuario").getValue().toString();
-                            final String image_usuario=dataSnapshot.child("image_usuario").getValue().toString();
+                         //   final String cargo_usuario=dataSnapshot.child("cargo_usuario").getValue().toString();
                             items.tvcorreo.setText(correo);
                             items.tvtnombre.setText(nombre);
 
@@ -132,6 +147,16 @@ public class ColegasFragment extends Fragment {
                                 }
 
                             }
+
+                            items.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    items.imgcam.setDrawingCacheEnabled(true);
+                                    items.imgcam.buildDrawingCache();
+                                    Bitmap bitmap = Bitmap.createBitmap(items.imgcam.getDrawingCache());
+                                    mostrarcolega(correo,nombre,"cargo",bitmap);
+                                }
+                            });
 
 
                         }
@@ -169,6 +194,31 @@ public class ColegasFragment extends Fragment {
             imgcam=(ImageView)itemView.findViewById(R.id.id_imgperfil1);
         }
     }
+
+    private  void  mostrarcolega(final String correo, final String nombre,String cargo,  Bitmap bitmap) {
+        builder1 = new AlertDialog.Builder(getContext());
+        Button btagregar;
+        TextView tvnombre,tvvcorreo,tvcargo;
+        ImageView imperfil;
+        View v = LayoutInflater.from(getContext()).inflate(R.layout.alert_detalle_colega, null);
+        builder1.setView(v);
+        tvvcorreo=(TextView)v.findViewById(R.id.id_tvcorreocolega);
+        tvnombre=(TextView)v.findViewById(R.id.id_tvnombreocolega);
+        tvcargo=(TextView)v.findViewById(R.id.id_tvcargoocolega);
+        imperfil=(ImageView)v.findViewById(R.id.id_imgperfil3);
+        imperfil.setImageBitmap(bitmap);
+
+       tvcargo.setText(cargo);
+       tvnombre.setText(nombre);
+       tvvcorreo.setText(correo);
+
+
+        alert  = builder1.create();
+        alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alert.show();
+    }
+
+
     public static boolean isValidContextForGlide(final Context context) {
         if (context == null) {
             return false;

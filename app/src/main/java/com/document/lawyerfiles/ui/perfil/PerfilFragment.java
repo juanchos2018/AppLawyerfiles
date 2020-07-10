@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.document.lawyerfiles.Clases.ClsColegas;
 import com.document.lawyerfiles.R;
+import com.document.lawyerfiles.activitys.ListaArchivos;
+import com.document.lawyerfiles.adapters.AdapterColegas;
+import com.document.lawyerfiles.ui.home.HomeFragment;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,6 +39,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -41,6 +47,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class PerfilFragment extends Fragment {
 
@@ -54,19 +61,22 @@ public class PerfilFragment extends Fragment {
     private static final int COD_SELECCIONA = 10;
     Uri uri;
 
-    private DatabaseReference referenceUsuarios;
+    private DatabaseReference referenceUsuarios,referenceColegas,referenceColegas2;
     private FirebaseAuth mAuth;
     String correoprofe;
     public FirebaseUser currentUser;
     private StorageReference mStorageRef;
-
+    private static final String TAG = "PerfilFragment";
     private StorageReference storageReference;
     private static final int COD_FOTO = 20;
+    String user_id;
     private final int MIS_PERMISOS = 100;
     public static PerfilFragment newInstance() {
         return new PerfilFragment();
     }
 
+    ArrayList<ClsColegas> ListaColegas;
+Button btn;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -75,10 +85,16 @@ public class PerfilFragment extends Fragment {
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
+        ListaColegas=new ArrayList<>();
+
+
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        String user_id = mAuth.getCurrentUser().getUid();
+         user_id = mAuth.getCurrentUser().getUid();
         correoprofe=mAuth.getCurrentUser().getEmail();
+
+
+
         referenceUsuarios = FirebaseDatabase.getInstance().getReference().child("Usuarios").child(user_id);
         referenceUsuarios.addValueEventListener(new ValueEventListener() {
             @Override
@@ -113,12 +129,70 @@ public class PerfilFragment extends Fragment {
                 startActivityForResult(intent.createChooser(intent,"Seleccione"),COD_SELECCIONA);// 10
             }
         });
+        lista();
+
         return vista;
+    }
+
+String [] listaas;
+    int contador;
+    private void lista(){
+      //  final String iarayid[]=new String[1];
+        int dimenson= HomeFragment.cantcolegas;
+        listaas=new String[dimenson];
+
+        referenceColegas = FirebaseDatabase.getInstance().getReference().child("MisColegas").child(user_id);
+        // referencealumno = FirebaseDatabase.getInstance().getReference().child("Alumnos");
+        Query q=referenceColegas;
+        q.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+            ListaColegas.clear();
+                contador  =0;
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    ClsColegas artist = postSnapshot.getValue(ClsColegas.class);
+
+
+                    listaas[contador]=artist.getId_usuario()+",";
+                    contador++;
+                    ListaColegas.add(artist);
+
+                }
+                AdapterColegas adapterC = new AdapterColegas(ListaColegas);
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private  void  cambiarfotocolega(String rutafoto){
+
+       for (ClsColegas item:ListaColegas) {
+
+         referenceColegas2=FirebaseDatabase.getInstance().getReference("MisColegas").child(item.getId_usuario());
+         referenceColegas2.child(user_id).child("iamge_usuario").setValue(rutafoto);
+
+        }
+
+         //  for (int i=0;i<listaas.length;i++){
+             //  Log.e(TAG, String.valueOf(  listaas[i]) );
+             //  referenceColegas2=FirebaseDatabase.getInstance().getReference("MisColegas").child(listaas[i]);
+               // referenceColegas2.child("iamge_usuario").setValue("ruta_de_foto");
+           //    referenceprofesor = FirebaseDatabase.getInstance().getReference().child("ProfesorAlumno").child(idprofe);
+              // referenceprofesor.child(keyalumno).child("rutafoto").setValue(dowloand.toString());
+
+         //  }
+
+
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             //TODO : ESTO SELECCIONA DE LA GALERIA
@@ -131,7 +205,6 @@ public class PerfilFragment extends Fragment {
                 }
 
                 uri=data.getData();
-
                 imgfoto.setImageURI(uri);
 
                 try {
@@ -148,7 +221,6 @@ public class PerfilFragment extends Fragment {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos);
                     byte[] path = baos.toByteArray();
-
 
                     final UploadTask uploadTask = mountainsRef.putBytes(path);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -174,6 +246,11 @@ public class PerfilFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         Uri downloadUri = task.getResult();
                                         referenceUsuarios.child("image_usuario").setValue(downloadUri.toString());
+
+                                        if (HomeFragment.cantcolegas>0){
+                                            cambiarfotocolega(downloadUri.toString());
+                                        }
+
 
                                     } else {
                                         Toast.makeText(getContext(), "Error al subir", Toast.LENGTH_SHORT).show();

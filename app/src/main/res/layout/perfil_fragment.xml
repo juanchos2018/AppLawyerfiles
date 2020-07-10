@@ -40,6 +40,7 @@
 
 
 
+
             </LinearLayout>
 
             <LinearLayout
@@ -55,6 +56,34 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="80dp">
+
+                 <TextView
+                     android:text="Nombre"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content">
+
+                 </TextView>
+
+                  <EditText
+                      android:hint="Nombre"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+
+                  </EditText>
+                    <TextView
+                        android:text="Apellido"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+                    <EditText
+                        android:hint="Apellido"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </EditText>
+
 
                 </LinearLayout>
 

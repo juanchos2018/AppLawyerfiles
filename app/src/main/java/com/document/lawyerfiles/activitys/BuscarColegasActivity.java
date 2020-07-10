@@ -43,7 +43,7 @@ public class BuscarColegasActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     public FirebaseUser currentUser;
     String id_usuario,correo_local,nombre_local,foto_local;
-    private DatabaseReference reference,reference2,reference3;
+    private DatabaseReference reference,reference2,reference3,reference4;
     RecyclerView recyclerView;
 
     android.app.AlertDialog.Builder builder1;
@@ -60,12 +60,26 @@ public class BuscarColegasActivity extends AppCompatActivity {
         nombre_local=getIntent().getStringExtra("name");
         foto_local=getIntent().getStringExtra("foto");
 
-        Toast.makeText(this, nombre_local, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, nombre_local, Toast.LENGTH_SHORT).show();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         id_usuario= mAuth.getCurrentUser().getUid();
         correo_local=mAuth.getCurrentUser().getEmail();
         reference= FirebaseDatabase.getInstance().getReference("Usuarios");
+
+        reference4= FirebaseDatabase.getInstance().getReference("Usuarios").child(id_usuario);
+        reference4.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         reference2=FirebaseDatabase.getInstance().getReference("MisColegas").child(id_usuario);
 
@@ -166,31 +180,32 @@ public class BuscarColegasActivity extends AppCompatActivity {
         imperfil=(ImageView)v.findViewById(R.id.id_imgperfil2);
         imperfil.setImageBitmap(bitmap);
 
-        tvestado.setText("Referencia");
+        tvestado.setText("Foto Perfil");
         btagregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //alert.dismiss();
-                String key=reference2.push().getKey();
+
+               // String key=reference2.push().getKey();
                 progressDialog=new ProgressDialog(BuscarColegasActivity.this);
                 progressDialog.setCancelable(false);
                 progressDialog.setTitle("Agregando Colega");
                 progressDialog.setMessage("Cargando..");
                 progressDialog.show();
-                ClsColegas o =new ClsColegas(key,id_colega,nombre,correo,image_usuario);
-                reference2.child(key).setValue(o).addOnCompleteListener(new OnCompleteListener<Void>() {
+                ClsColegas o =new ClsColegas(id_colega,id_colega,nombre,correo,image_usuario);// cambie esto porid_colega estaba key
+                reference2.child(id_colega).setValue(o).addOnCompleteListener(new OnCompleteListener<Void>() { // cambie esto porid_colega estaba key
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
 
                         if (task.isSuccessful()){
                             reference3=FirebaseDatabase.getInstance().getReference("MisColegas").child(id_colega);
                             String key2=reference3.push().getKey();
-                            ClsColegas o2=new ClsColegas(key2,id_usuario,"ads",correo_local,"ada");
-                            reference3.child(key2).setValue(o2).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            ClsColegas o2=new ClsColegas(id_usuario,id_usuario,nombre_local,correo_local,foto_local);
+                            reference3.child(id_usuario).setValue(o2).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if ( task.isSuccessful()){
                                         progressDialog.dismiss();
+                                        alert.dismiss();
                                         Toast.makeText(BuscarColegasActivity.this, "Agregado We", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -209,7 +224,6 @@ public class BuscarColegasActivity extends AppCompatActivity {
         });
         alert  = builder1.create();
         alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
         alert.show();
     }
 

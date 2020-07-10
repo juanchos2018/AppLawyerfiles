@@ -41,6 +41,7 @@ public class HomeFragment extends Fragment {
 
     TextView txt1,txt2;
 
+    public  static  int cantcolegas;
     TextView txtclientes,txtcolegas;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -104,51 +105,57 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        referenceclientes.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    int contador=0;
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        ClsClientes obj = postSnapshot.getValue(ClsClientes.class);
-                        contador++;
+        if (currentUser != null) {
+            referenceclientes.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+                        int contador=0;
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            ClsClientes obj = postSnapshot.getValue(ClsClientes.class);
+                            contador++;
+                        }
+                        txtclientes.setText(String.valueOf( contador));
                     }
-                    txtclientes.setText(String.valueOf( contador));
-                }
-                else{
-                    txtclientes.setText("0");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        referencecolegas.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    int contador=0;
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        ClsColegas obj = postSnapshot.getValue(ClsColegas.class);
-                        contador++;
+                    else{
+                        txtclientes.setText("0");
                     }
-                    txtcolegas.setText(String.valueOf( contador));
-                    progressDialog.dismiss();
                 }
-                else{
-                    txtcolegas.setText("0");
-                    progressDialog.dismiss();
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
                 }
-            }
+            });
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+            referencecolegas.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+                        int contador=0;
+                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                            ClsColegas obj = postSnapshot.getValue(ClsColegas.class);
+                            contador++;
+                        }
+                        txtcolegas.setText(String.valueOf( contador));
+                        cantcolegas=contador;
+                        progressDialog.dismiss();
+                    }
+                    else{
+                        txtcolegas.setText("0");
+                        progressDialog.dismiss();
+                    }
+                }
 
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
+
     }
 
 }

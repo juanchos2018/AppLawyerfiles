@@ -697,9 +697,8 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
         aler2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         aler2.show();
-
-
     }
+
     private void resetAnimationView() {
         currentAnimationFrame = 0;
         animationView.addValueCallback(new KeyPath("**"), LottieProperty.COLOR_FILTER,

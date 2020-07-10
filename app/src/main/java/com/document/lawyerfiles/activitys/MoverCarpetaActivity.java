@@ -65,7 +65,7 @@ public class MoverCarpetaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mover_carpeta);
-    setTitle("Seleccionar Destino");
+        setTitle("Seleccionar Destino");
         mAuth = FirebaseAuth.getInstance();
         user_id = mAuth.getCurrentUser().getUid();
         mStorageRef = FirebaseStorage.getInstance().getReference();

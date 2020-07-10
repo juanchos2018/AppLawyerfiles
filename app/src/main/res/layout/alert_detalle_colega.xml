@@ -31,7 +31,7 @@
             </TextView>
 
             <ImageView
-                android:id="@+id/id_imgperfil2"
+                android:id="@+id/id_imgperfil3"
                 android:layout_width="170dp"
                 android:layout_height="170dp"
                 android:layout_gravity="center">
@@ -39,29 +39,38 @@
             </ImageView>
             <TextView
                 android:id="@+id/id_tvcorreocolega"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="correo"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:id="@+id/id_tvnombreocolega"
+                android:textSize="18sp"
+                android:text="asdfsdfsdafsd"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                android:id="@+id/id_tvcargoocolega"
+                android:textSize="18sp"
+                android:text="cargo"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
             </TextView>
 
-            <Button
-                android:id="@+id/idbtncerrardialogo"
-                android:layout_marginTop="10dp"
-                android:text="Agregar"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:layout_width="150dp"
-                android:layout_marginBottom="30dp"
-                android:textColor="@color/white"
-                android:background="@drawable/btn_border2"
-                android:layout_height="40dp">
-
-            </Button>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
