@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -71,6 +72,7 @@ public class PerfilFragment extends Fragment {
     private static final int COD_FOTO = 20;
     String user_id;
     private final int MIS_PERMISOS = 100;
+    TextView txtnombre,txtapellido;
     public static PerfilFragment newInstance() {
         return new PerfilFragment();
     }
@@ -83,6 +85,8 @@ Button btn;
         View vista = inflater.inflate(R.layout.perfil_fragment, container, false);
         imgfoto=(ImageView)vista.findViewById(R.id.idimgfotoperfil);
 
+        txtnombre=(TextView)vista.findViewById(R.id.txtnombre);
+        txtapellido=(TextView)vista.findViewById(R.id.txtapellido);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         ListaColegas=new ArrayList<>();
@@ -100,6 +104,12 @@ Button btn;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String img_usuario = dataSnapshot.child("image_usuario").getValue().toString();
+                String nombre = dataSnapshot.child("nombre_usuario").getValue().toString();
+                String apellido = dataSnapshot.child("apellido_usuario").getValue().toString();
+
+                txtnombre.setText(nombre);
+                txtapellido.setText(apellido);
+
                 if (img_usuario.equals("default_image")){
                     imgfoto.setImageResource(R.drawable.default_profile_image);
 

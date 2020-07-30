@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -20,6 +21,7 @@ import com.document.lawyerfiles.Clases.ClsClientes;
 import com.document.lawyerfiles.Clases.ClsColegas;
 import com.document.lawyerfiles.R;
 import com.document.lawyerfiles.activitys.MapaActivity;
+import com.document.lawyerfiles.activitys.NoticiasActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,7 +45,7 @@ public class HomeFragment extends Fragment {
 
     public  static  int cantcolegas;
     TextView txtclientes,txtcolegas;
-
+    CardView carNoticias;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_home, container, false);
@@ -51,6 +53,7 @@ public class HomeFragment extends Fragment {
         btnscanear=(Button)vista.findViewById(R.id.id_btnscanear);
         txtclientes=(TextView)vista.findViewById(R.id.idcantidaclases);
         txtcolegas=(TextView)vista.findViewById(R.id.idcantidcolegas);
+        carNoticias =(CardView)vista.findViewById(R.id.carNoticias);
 
         txt1=(TextView)vista.findViewById(R.id.tvFormat);
         txt2=(TextView)vista.findViewById(R.id.tvresult);
@@ -72,6 +75,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 scanear();
+            }
+        });
+        carNoticias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent( getContext(), NoticiasActivity.class));
+
             }
         });
         return vista;

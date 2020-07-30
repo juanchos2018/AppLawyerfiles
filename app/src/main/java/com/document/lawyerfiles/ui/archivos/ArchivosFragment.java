@@ -18,7 +18,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,11 +72,11 @@ public class ArchivosFragment extends Fragment {
     private StorageReference mStorageRef;
     private ProgressDialog progressDialog;
     private RecyclerView recyclerView;
-
+    private EditText etbuscarnombre;
     android.app.AlertDialog.Builder builder1;
     AlertDialog alert;
     String user_id;
-
+    AdapterCarpetas myAdapter;
     GridView simpleList;
     ArrayList<ClsCarpetas> birdList=new ArrayList<>();
 
@@ -86,7 +88,7 @@ public class ArchivosFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.archivos_fragment, container, false);
-
+        etbuscarnombre=(EditText)vista.findViewById(R.id.idetbuscarclase);
         FloatingActionButton fab = vista.findViewById(R.id.fab1);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +110,22 @@ public class ArchivosFragment extends Fragment {
 
         }
 
+        etbuscarnombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // searchPeopleProfile(etbuscarnombre.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filtrar(s.toString().toLowerCase());
+            }
+        });
         return vista;
     }
 
@@ -167,6 +185,19 @@ public class ArchivosFragment extends Fragment {
         alert.show();
     }
 
+
+
+    private void filtrar(String texto) {
+        ArrayList<ClsCarpetas> filtradatos= new ArrayList<>();
+
+        for(ClsCarpetas item :birdList){
+            if (item.getNombre_carpeta().contains(texto)){
+                filtradatos.add(item);
+            }
+            myAdapter.filtrar(filtradatos);
+        }
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -188,7 +219,7 @@ public class ArchivosFragment extends Fragment {
                     birdList.add(artist);
                 }
                 //AdapterCarpetas2 myAdapter=new AdapterCarpetas2(ListaArchivos3Activity.this,R.layout.grid_view_items,birdList);
-              AdapterCarpetas myAdapter=new AdapterCarpetas(getActivity(),birdList);
+             myAdapter=new AdapterCarpetas(getActivity(),birdList);
              //   AdapterCarpetas2 adapterCarpetas2=new AdapterCarpetas2(birdList);
                 simpleList.setAdapter(myAdapter);
                 simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -65,6 +65,10 @@ public class AdapterCarpetas   extends ArrayAdapter<ClsCarpetas> {
         return convertView;
 
     }
+    public  void filtrar(ArrayList<ClsCarpetas> filtro){
+        this.al_menu=filtro;
+        notifyDataSetChanged();
+    }
 
     public static class ViewHolder {
         TextView tv_foldern, tv_foldersize;

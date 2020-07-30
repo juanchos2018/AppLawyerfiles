@@ -63,17 +63,13 @@ public class MapaFragment extends Fragment  implements OnMapReadyCallback, Locat
                              Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_mapa, container, false);
         btn3=(Button)vista.findViewById(R.id.btnenviarubcacion);
-
         etinfo=(EditText)vista.findViewById(R.id.etinfo);
         tvlati=(TextView)vista.findViewById(R.id.tvlatitud);
         tvlongi=(TextView)vista.findViewById(R.id.tvlongitud);
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
         mAuth = FirebaseAuth.getInstance();
         user_id = mAuth.getCurrentUser().getUid();
-
         referenceclientes= FirebaseDatabase.getInstance().getReference("Location").child(user_id);
 
         btn3.setOnClickListener(new View.OnClickListener() {

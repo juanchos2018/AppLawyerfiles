@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.ContactsContract;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -198,8 +199,8 @@ public class ClientesFragment extends Fragment {
         }
         else{
             progressDialog=new ProgressDialog(getContext());
-            progressDialog.setTitle("Agregajdo Carpeta");
-            progressDialog.setMessage("cargando");
+            progressDialog.setTitle("Agregando Cliente");
+            progressDialog.setMessage("cargando...");
             progressDialog.show();
             progressDialog.setCancelable(false);
             String key = referenceclientes.push().getKey();
@@ -207,10 +208,18 @@ public class ClientesFragment extends Fragment {
             Date date = new Date();
             String fecha = dateFormat.format(date);
             String name=getName(uri);
+            String celular =getPhone(uri);
             String caracter=String.valueOf(name.charAt(0));
 
+            if (TextUtils.isEmpty(name)){
+                name="Contacto";
+            }
+            if (TextUtils.isEmpty(celular)){
+                celular="9423232323";
+            }
 
-            ClsClientes o =new ClsClientes(key,caracter,getName(uri),getPhone(uri),"","");
+
+            ClsClientes o =new ClsClientes(key,caracter,name,celular,"","");
             referenceclientes.child(key).setValue(o).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

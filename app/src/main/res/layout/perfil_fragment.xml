@@ -60,25 +60,31 @@
                  <TextView
                      android:text="Nombre"
                      android:layout_width="match_parent"
+                     android:layout_marginTop="10dp"
                      android:layout_height="wrap_content">
 
                  </TextView>
 
                   <EditText
+                      android:id="@+id/txtnombre"
                       android:hint="Nombre"
                       android:layout_width="match_parent"
+                      android:layout_marginTop="20dp"
                       android:layout_height="wrap_content">
 
                   </EditText>
                     <TextView
                         android:text="Apellido"
+                        android:layout_marginTop="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                     </TextView>
 
                     <EditText
+                        android:id="@+id/txtapellido"
                         android:hint="Apellido"
+                        android:layout_marginTop="20dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 

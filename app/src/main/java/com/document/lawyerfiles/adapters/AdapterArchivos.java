@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.document.lawyerfiles.Clases.ClsArchivos;
+import com.document.lawyerfiles.Clases.ClsCarpetas;
 import com.document.lawyerfiles.R;
 
 import java.util.ArrayList;
@@ -98,6 +99,11 @@ public class AdapterArchivos  extends ArrayAdapter<ClsArchivos> {
         viewHolder.tv_foldern.setText(al_menu.get(position).getNombre_archivo());
         return convertView;
 
+    }
+
+    public  void filtrar(ArrayList<ClsArchivos> filtro){
+        this.al_menu=filtro;
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder {

@@ -32,13 +32,16 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.OpenableColumns;
 import android.provider.Settings;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -106,6 +109,8 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
     TextView txtprueba;
     String ruta_archivo_descargar;
     GridView simpleList;
+    EditText etbuscarnombre;
+    AdapterArchivos myAdapter;
     private final int frames = 9;
     private int currentAnimationFrame = 0;
     private LottieAnimationView animationView;
@@ -124,7 +129,8 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
         correousuario=mAuth.getCurrentUser().getEmail();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         keycarpeta=getIntent().getStringExtra("key");
-        Log.e("ke",keycarpeta);
+
+        etbuscarnombre=(EditText)findViewById(R.id.idetbuscararchivo);
 
         FloatingActionButton fab = findViewById(R.id.fab5);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -139,8 +145,39 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
         referencearchivos= FirebaseDatabase.getInstance().getReference("Archivos2").child(keycarpeta);
        //recyclerView=findViewById(R.id.recylcercarchivos);
         simpleList=(GridView)findViewById(R.id.simpleGridView1);
+
+        etbuscarnombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // searchPeopleProfile(etbuscarnombre.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filtrar(s.toString().toLowerCase());
+            }
+        });
+
+
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+    private void filtrar(String texto) {
+        ArrayList<ClsArchivos> filtradatos= new ArrayList<>();
+
+        for(ClsArchivos item :birdList){
+            if (item.getNombre_archivo().contains(texto)){
+                filtradatos.add(item);
+            }
+            myAdapter.filtrar(filtradatos);
+        }
+    }
+
+
     private void abrirgaleria() {
 
         Intent intent = new Intent();
@@ -186,7 +223,7 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
                     birdList.add(artist);
                 }
 
-                AdapterArchivos myAdapter=new AdapterArchivos(getApplicationContext(),birdList);
+                myAdapter=new AdapterArchivos(getApplicationContext(),birdList);
 
                 simpleList.setAdapter(myAdapter);
                 simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
