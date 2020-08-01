@@ -38,6 +38,12 @@
         android:name="com.document.lawyerfiles.ui.consultas.ConsultasFragment"
         android:label="Consultas"
         tools:layout="@layout/consultas_fragment" />
+
+    <fragment
+        android:id="@+id/nav_calendario"
+        android:name="com.document.lawyerfiles.ui.calendario.CalendarioFragment"
+        android:label="Calendario"
+        tools:layout="@layout/calendario_fragment" />
     <fragment
         android:id="@+id/nav_perfil"
         android:name="com.document.lawyerfiles.ui.perfil.PerfilFragment"

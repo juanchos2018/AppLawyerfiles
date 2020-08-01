@@ -6,7 +6,7 @@ public class ClsArchivos {
     String nombre_archivo;
     String tipo_documento;   // fole   o img
     String tipo_archivo; //ffile  o img  ppt jpt  png  xecl
- //file  o  img
+
     String peso_archivo;
     String fecha_archivo;
     String ruta_archivo;

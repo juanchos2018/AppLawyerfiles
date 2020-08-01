@@ -34,6 +34,10 @@
             android:title="Consultas" />
 
         <item
+            android:id="@+id/nav_calendario"
+            android:icon="@drawable/ic_consultas"
+            android:title="Calendario" />
+        <item
             android:id="@+id/nav_perfil"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Perfil" />
