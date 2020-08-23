@@ -60,31 +60,34 @@ public class AdapterArchivos  extends ArrayAdapter<ClsArchivos> {
 
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_archivos2, parent, false);
-
             viewHolder.tv_foldern = (TextView) convertView.findViewById(R.id.textView2);
             viewHolder.img = (ImageView) convertView.findViewById(R.id.imageView2);//
             viewHolder.imgicnono = (ImageView) convertView.findViewById(R.id.imgicono);//imgicono
             convertView.setTag(viewHolder);
+
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if(al_menu.get(position).getTipo_archivo().equals("docx")){
+        if(al_menu.get(position).getTipo_archivo().equals("docx") || al_menu.get(position).getTipo_archivo().equals("doc") ){
             viewHolder.img.setImageResource(R.drawable.fondodock);
             viewHolder.imgicnono.setImageResource(R.drawable.ico_wor3);
         }
 
-        if(al_menu.get(position).getTipo_archivo().equals("doc") ){
-            viewHolder.img.setImageResource(R.drawable.fondodock);
-            viewHolder.imgicnono.setImageResource(R.drawable.ico_wor3);
-        }
-
-        if(al_menu.get(position).getTipo_archivo().equals("ppt") || al_menu.get(position).getTipo_archivo().equals("pptx")){
+        else if(al_menu.get(position).getTipo_archivo().equals("ppt") || al_menu.get(position).getTipo_archivo().equals("pptx")){
             viewHolder.img.setImageResource(R.drawable.ppt_logo);
             viewHolder.imgicnono.setImageResource(R.drawable.ico_ppt2);
         }
 
-        if(al_menu.get(position).getTipo_archivo().equals("img")){
+       else if(al_menu.get(position).getTipo_archivo().equals("pdf") ){
+            viewHolder.img.setImageResource(R.drawable.fondopdf);
+            viewHolder.imgicnono.setImageResource(R.drawable.ico_pdf);
+        }
+        else if(al_menu.get(position).getTipo_archivo().equals("xls") || al_menu.get(position).getTipo_archivo().equals("xlsx")){
+            viewHolder.img.setImageResource(R.drawable.fondo_excel);
+            viewHolder.imgicnono.setImageResource(R.drawable.ico_excel);
+        }
+       else   if(al_menu.get(position).getTipo_archivo().equals("img")){
 
             Glide.with(getContext())
                     .load(al_menu.get(position).getRuta_archivo())

@@ -81,6 +81,8 @@ public class Consultas2Activity extends AppCompatActivity {
         else{
 
             String  URL2="https://quertium.com/api/v1/sunat/ruc/"+ruc+"?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.MTM3Mw.x-jUgUBcJukD5qZgqvBGbQVMxJFUAIDroZEm4Y9uTyg";
+
+
             progressDialog =new ProgressDialog(this);
             progressDialog.setTitle("Consultando");
             progressDialog.setMessage("Espera We ....");

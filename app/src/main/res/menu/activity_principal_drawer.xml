@@ -42,6 +42,10 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Perfil" />
 
+        <item
+            android:id="@+id/nav_grafico"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Reporte" />
 
     </group>
 

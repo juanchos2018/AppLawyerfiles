@@ -779,6 +779,7 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
 
         progressDialog.show();
         progressDialog.setCancelable(false);
+
         reference2= FirebaseDatabase.getInstance().getReference("Archivos2").child(keycarpeta).child(keyarchivo);
         reference2.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

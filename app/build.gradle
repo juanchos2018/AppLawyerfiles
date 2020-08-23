@@ -19,6 +19,13 @@ android {
     }
 }
 
+repositories {
+
+    maven {
+        url "https://jitpack.io"
+    }
+
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -58,5 +65,8 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
     implementation 'com.balysv:material-ripple:1.0.2'
     implementation 'sun.bob:mcalendarview:1.0.0'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
 }
 apply plugin: 'com.google.gms.google-services'

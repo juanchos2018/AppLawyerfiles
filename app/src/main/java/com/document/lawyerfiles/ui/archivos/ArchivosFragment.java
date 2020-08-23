@@ -139,6 +139,7 @@ public class ArchivosFragment extends Fragment {
             progressDialog.setMessage("cargando");
             progressDialog.show();
             progressDialog.setCancelable(false);
+
             String key = referencecarpetas.push().getKey();
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             Date date = new Date();

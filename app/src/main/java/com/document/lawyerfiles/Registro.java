@@ -88,7 +88,8 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String dni=et_dni.getText().toString();
-                consultardatos(dni);
+              //  consultardatos(dni);
+                ConsultaDatos2(dni);
             }
         });
         btnregistrar.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +230,57 @@ public class Registro extends AppCompatActivity {
                 }
         );
     }
+    private  void  ConsultaDatos2(final  String dni){
+
+        if (TextUtils.isEmpty(dni)){
+            et_dni.setError("Falta Dni");
+        }
+        else{
+
+            progressDialog =new ProgressDialog(this);
+            progressDialog.setTitle("Consulta");
+            progressDialog.setMessage("Cargando..");
+            progressDialog.show();
+
+
+        final String URL2="https://quertium.com/api/v1/reniec/dni/"+dni+"?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.MTM3Mw.x-jUgUBcJukD5qZgqvBGbQVMxJFUAIDroZEm4Y9uTyg";
+        RequestQueue requestQueue2= Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest1 =new StringRequest(Request.Method.GET,URL2,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String responses) {
+                        try {
+                            JSONObject jsonObject2=new JSONObject(responses);
+                            //  JSONObject nombre=jsonObject.getJSONObject("nombres");
+                            String name=jsonObject2.getString("primerNombre");
+                            String name2=jsonObject2.getString("segundoNombre");
+                            String apellido_paterno=jsonObject2.getString("apellidoMaterno");
+                            String apellido_materno=jsonObject2.getString("apellidoMaterno");
+                            tv_nombre.setText(name +" "+name2);
+                            tv_apellidpaterno.setText(apellido_paterno +" " +apellido_materno);
+                            progressDialog.dismiss();
+                        }
+                        catch (JSONException e){
+                            e.printStackTrace();
+                            progressDialog.dismiss();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                progressDialog.dismiss();
+            }
+        });
+        int socketTimeout = 30000;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest1.setRetryPolicy(policy);
+        requestQueue2.add(stringRequest1);
+        }
+
+    }
+
     private void consultardatos(final String dni) {
         if (TextUtils.isEmpty(dni)){
             et_dni.setError("campo requerido");

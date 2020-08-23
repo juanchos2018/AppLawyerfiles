@@ -94,9 +94,8 @@ Button btn;
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-         user_id = mAuth.getCurrentUser().getUid();
+         user_id =    mAuth.getCurrentUser().getUid();
         correoprofe=mAuth.getCurrentUser().getEmail();
-
 
 
         referenceUsuarios = FirebaseDatabase.getInstance().getReference().child("Usuarios").child(user_id);
@@ -144,7 +143,7 @@ Button btn;
         return vista;
     }
 
-String [] listaas;
+    String [] listaas;
     int contador;
     private void lista(){
       //  final String iarayid[]=new String[1];
