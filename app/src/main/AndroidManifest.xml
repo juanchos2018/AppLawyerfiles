@@ -22,14 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activitys.Grafico1Activity">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activitys.CasosActivity"></activity>
+        <activity android:name=".activitys.Grafico1Activity"></activity>
         <activity android:name=".activitys.CalendarioNuevoActivity" />
         <activity android:name=".activitys.NoticiasActivity" />
         <activity android:name=".activitys.Muliselected" />
@@ -56,10 +50,11 @@
         <activity
             android:name=".Clases.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
-
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".Registro" />
         <activity

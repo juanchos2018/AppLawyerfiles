@@ -24,6 +24,12 @@
             android:title="Colegas" />
 
         <item
+            android:id="@+id/nav_casos"
+            android:icon="@drawable/ic_email"
+            android:title="Casos" />
+
+
+        <item
             android:id="@+id/nav_bandeja"
             android:icon="@drawable/ic_email"
             android:title="Bandeja" />
@@ -43,7 +49,7 @@
             android:title="Perfil" />
 
         <item
-            android:id="@+id/nav_grafico"
+            android:id="@+id/nav_reporte"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Reporte" />
 

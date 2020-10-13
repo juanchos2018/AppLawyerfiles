@@ -16,6 +16,7 @@
         android:label="Archivos"
         tools:layout="@layout/archivos_fragment" />
 
+
     <fragment
         android:id="@+id/nav_clientes"
         android:name="com.document.lawyerfiles.ui.clientes.ClientesFragment"
@@ -26,6 +27,11 @@
         android:name="com.document.lawyerfiles.ui.colegas.ColegasFragment"
         android:label="Colegas"
         tools:layout="@layout/colegas_fragment" />
+    <fragment
+        android:id="@+id/nav_casos"
+        android:name="com.document.lawyerfiles.ui.casos.CasosFragment"
+        android:label="Colegas"
+        tools:layout="@layout/casos_fragment" />
 
     <fragment
         android:id="@+id/nav_bandeja"
@@ -44,6 +50,11 @@
         android:name="com.document.lawyerfiles.ui.calendario.CalendarioFragment"
         android:label="Calendario"
         tools:layout="@layout/calendario_fragment" />
+    <fragment
+        android:id="@+id/nav_reporte"
+        android:name="com.document.lawyerfiles.ui.reporte.ReporteFragment"
+        android:label="Grafico"
+        tools:layout="@layout/reporte_fragment" />
     <fragment
         android:id="@+id/nav_perfil"
         android:name="com.document.lawyerfiles.ui.perfil.PerfilFragment"

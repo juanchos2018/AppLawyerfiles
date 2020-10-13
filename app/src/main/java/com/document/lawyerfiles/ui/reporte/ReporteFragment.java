@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.document.lawyerfiles.Clases.Casos;
 import com.document.lawyerfiles.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
@@ -30,6 +31,13 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -41,9 +49,20 @@ public class ReporteFragment extends Fragment {
     private PieChart pieChart;
     private BarChart barChart;
 
-    private String month[]= new String[]{"Enero","Febreo","Marzo","Abril","Mayo" };
-    private int[] sale =new int[]{24,20,38,10,15};
+    private DatabaseReference reference;
+
+    private FirebaseAuth mAuth;
+
+    String id_user;
+    private String month[]= new String[]{"Divorcio","Pension","Herencia","Custodia" };
+    private int[] sale =new int[]{3,2,1,2};
     private int[] color = new int[]{Color.BLACK,Color.GRAY,Color.GREEN, Color.RED , Color.CYAN};
+
+
+    public  static  int sumar;
+    ArrayList<Casos> listaCasos;
+    private String casos[] ;  //= new String[]{"Enero","Febreo","Marzo","Abril","Mayo" };
+    private int[] cantidad =new int[]{24,20,38,10,15};
 
     public static ReporteFragment newInstance() {
         return new ReporteFragment();
@@ -59,12 +78,52 @@ public class ReporteFragment extends Fragment {
         barChart=(BarChart)vista.findViewById(R.id.graficobarra);
         pieChart=(PieChart)vista.findViewById(R.id.graficopie);
 
-        createChart();
+
+
+        mAuth = FirebaseAuth.getInstance();
+        id_user = mAuth.getCurrentUser().getUid();
+        reference= FirebaseDatabase.getInstance().getReference("MisCasos").child(id_user);
 
 
         return vista;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Query q=reference;
+        listaCasos=new ArrayList<>();
+
+        q.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int contador=0;
+                for (DataSnapshot obj : dataSnapshot.getChildren()) {
+                    Casos un = obj.getValue(Casos.class);
+                    listaCasos.add(un);
+                  //  casos[contador] =un.getTipoCAso();
+                    //String casos[contador] = un.getTipoCAso();
+
+                  //  String[] fechas= un.getFecha();
+                    // unidadList.add(obj.getValue(Unidad.class));
+                }
+
+                createChart();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
 
     private Chart getSameChart(Chart chart, String descrpcion, int texcolor, int backgrodcolor, int animatey ){
         chart.getDescription().setText(descrpcion);
@@ -82,6 +141,7 @@ public class ReporteFragment extends Fragment {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
 
         ArrayList<LegendEntry> entries  =new ArrayList<>();
+
         for (int i =0;i<month.length;i++){
             LegendEntry entry=new LegendEntry();
             entry.formColor=color[i];
@@ -90,6 +150,23 @@ public class ReporteFragment extends Fragment {
 
         }
 
+
+        /*
+
+        int conador=0;
+        for (Casos variable: listaCasos) {
+
+           // entries.add(new BarEntry(conador,variable.getTipoCAso()));
+            conador++;
+            LegendEntry entry=new LegendEntry();
+            entry.formColor=color[conador];
+            entry.label=variable.getTipoCAso();
+            entries.add(entry);
+
+        }
+
+
+         */
         legend.setCustom(entries);
 
     }
@@ -98,6 +175,9 @@ public class ReporteFragment extends Fragment {
         ArrayList<BarEntry> entries  =new ArrayList<>();
         for (int i =0;i<sale.length;i++)
             entries.add(new BarEntry(i,sale[i]));
+
+
+
 
         return  entries;
 
@@ -137,11 +217,14 @@ public class ReporteFragment extends Fragment {
         asixLeft(barChart.getAxisLeft());
         asixRight(barChart.getAxisRight());
 
-        pieChart=(PieChart)getSameChart(pieChart,"ventas",Color.GRAY,Color.MAGENTA,3000);
+
+        pieChart=(PieChart)getSameChart(pieChart,"Casos",Color.GRAY,Color.MAGENTA,3000);
         pieChart.setHoleRadius(10);
         pieChart.setTransparentCircleRadius(12);
         pieChart.setData(getpieData());
         pieChart.invalidate();
+
+
 
         //pieChart.setDrawHoleEnabled(false);
 
