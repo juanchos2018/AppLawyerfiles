@@ -86,6 +86,7 @@ public class ReporteFragment extends Fragment {
 
 
         return vista;
+        ///return  null;
     }
 
 

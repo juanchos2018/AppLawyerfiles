@@ -100,7 +100,7 @@ public class CalendarioFragment extends Fragment {
 
                         @Override
                         public void onDateClick(View view, DateData date) {
-
+                    //Arreglar fecha
                             Integer dia=Integer.parseInt(date.getDayString());
                             String mes=date.getMonthString();
                             Integer ano=date.getYear();
