@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,17 +25,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.ContactsContract;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.document.lawyerfiles.Clases.ClsClientes;
 import com.document.lawyerfiles.R;
+import com.document.lawyerfiles.activitys.BuscarClienteActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,6 +51,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -72,6 +78,8 @@ public class ClientesFragment extends Fragment {
 
     TextView tvnombre;
     String user_id;
+    private EditText etbuscarnombre;
+
     public static ClientesFragment newInstance() {
         return new ClientesFragment();
     }
@@ -102,8 +110,62 @@ public class ClientesFragment extends Fragment {
         if (solicitaPermisosVersionesSuperiores()){
 
         }
+        etbuscarnombre = vista.findViewById(R.id.idetbuscarclase2);
+        etbuscarnombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchPeopleProfile(etbuscarnombre.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
         return vista;
     }
+
+    private void searchPeopleProfile(String searchString) {
+
+        final Query searchQuery = referenceclientes.orderByChild("nombre_cliente")
+                .startAt(searchString.toUpperCase()).endAt(searchString.toUpperCase() + "\uf8ff");
+        //final Query searchQuery = peoplesDatabaseReference.orderByChild("search_name").equalTo(searchString);
+
+        FirebaseRecyclerOptions<ClsClientes> recyclerOptions = new FirebaseRecyclerOptions.Builder<ClsClientes>()
+                .setQuery(searchQuery, ClsClientes.class)
+                .build();
+        final Context context = getContext();
+        FirebaseRecyclerAdapter<ClsClientes, Items> adapter = new FirebaseRecyclerAdapter<ClsClientes, Items>(recyclerOptions) {
+            @Override
+            protected void onBindViewHolder(@NonNull final Items holder, final int position, @NonNull final ClsClientes model) {
+
+                holder.txtnomcliente.setText(model.getNombre_cliente().toLowerCase());
+                holder.txtcelular.setText(model.getCelular_cliente());
+                holder.txtcaracter.setText(model.getCaracter());
+
+            }
+
+            @NonNull
+            @Override
+            public Items onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_clientes, viewGroup, false);
+                return new Items(view);
+            }
+        };
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+    }
+
+
+
+
     private void mostrarcontactos() {
 
         Intent i = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
@@ -112,6 +174,7 @@ public class ClientesFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
         FirebaseRecyclerOptions<ClsClientes> recyclerOptions = new FirebaseRecyclerOptions.Builder<ClsClientes>()
                 .setQuery(referenceclientes, ClsClientes.class).build();
         FirebaseRecyclerAdapter<ClsClientes,Items> adapter =new FirebaseRecyclerAdapter<ClsClientes, Items>(recyclerOptions) {
@@ -131,7 +194,14 @@ public class ClientesFragment extends Fragment {
                             items.txtnomcliente.setText(nombre_cliente);
                             items.txtcelular.setText(celular);
                             items.txtcaracter.setText(caracter);
-
+                            items.imgcall.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String phone = "+34666777888";
+                                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", celular, null));
+                                    startActivity(intent);
+                                }
+                            });
 
                         }
 
@@ -162,15 +232,14 @@ public class ClientesFragment extends Fragment {
 
     public  static class Items extends RecyclerView.ViewHolder{
         TextView txtnomcliente,txtcelular,txtcaracter;
-        ImageView imgfoto;
+        ImageView imgcall;
 
         public Items(@NonNull View itemView) {
             super(itemView);
             txtnomcliente=(TextView)itemView.findViewById(R.id.id_tvnombrecliente);
             txtcelular=(TextView)itemView.findViewById(R.id.id_tvcelularcliente);
             txtcaracter=(TextView)itemView.findViewById(R.id.idcaracter);
-
-
+            imgcall=(ImageView)itemView.findViewById(R.id.imgcall);
 
         }
     }

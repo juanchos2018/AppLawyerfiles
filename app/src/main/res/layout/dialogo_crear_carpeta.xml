@@ -48,7 +48,8 @@
                 <Button
 
                     android:text="Cerrar"
-                    android:background="@color/bgAmarillo"
+                    android:background="@color/bgRojo"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -57,7 +58,8 @@
                     android:id="@+id/id_btnagregarcarpeta"
                     android:text="crear"
                     android:layout_marginLeft="5dp"
-                    android:background="@color/bgVerde"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 

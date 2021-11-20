@@ -139,7 +139,7 @@ public class Registro extends AppCompatActivity {
         else{
             progressDialog =new ProgressDialog(this);
             progressDialog.setTitle("Creando Cuenta");
-            progressDialog.setMessage("Espera We ....");
+            progressDialog.setMessage("Cargando...");
             progressDialog.show();
             progressDialog.setCanceledOnTouchOutside(false);
 
@@ -254,7 +254,7 @@ public class Registro extends AppCompatActivity {
                             //  JSONObject nombre=jsonObject.getJSONObject("nombres");
                             String name=jsonObject2.getString("primerNombre");
                             String name2=jsonObject2.getString("segundoNombre");
-                            String apellido_paterno=jsonObject2.getString("apellidoMaterno");
+                            String apellido_paterno=jsonObject2.getString("apellidoPaterno");
                             String apellido_materno=jsonObject2.getString("apellidoMaterno");
                             tv_nombre.setText(name +" "+name2);
                             tv_apellidpaterno.setText(apellido_paterno +" " +apellido_materno);

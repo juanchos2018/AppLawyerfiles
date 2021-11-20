@@ -104,7 +104,7 @@ public class CalendarioFragment extends Fragment {
                             Integer dia=Integer.parseInt(date.getDayString());
                             String mes=date.getMonthString();
                             Integer ano=date.getYear();
-
+                         //   Toast.makeText(getContext(), "clcikl", Toast.LENGTH_SHORT).show();
                             String fechareu=dia+"/"+mes+"/"+String.valueOf(ano);
                             Query q=reference1.orderByChild("fecha").equalTo(fechareu);
                             q.addValueEventListener(new ValueEventListener() {

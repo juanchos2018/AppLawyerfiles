@@ -18,18 +18,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.document.lawyerfiles.Clases.ClsClientes;
 import com.document.lawyerfiles.Clases.ClsColegas;
 import com.document.lawyerfiles.Clases.ClsUsuarios;
 import com.document.lawyerfiles.R;
+import com.document.lawyerfiles.activitys.BuscarClienteActivity;
 import com.document.lawyerfiles.activitys.BuscarColegasActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -43,6 +48,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class ColegasFragment extends Fragment {
@@ -57,6 +63,7 @@ public class ColegasFragment extends Fragment {
 
     android.app.AlertDialog.Builder builder1;
     AlertDialog alert;
+    private EditText etbuscarnombre;
 
     public static ColegasFragment newInstance() {
         return new ColegasFragment();
@@ -91,19 +98,93 @@ public class ColegasFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 buscarcolegas();
             }
         });
 
         recyclerView=(RecyclerView)vista.findViewById(R.id.recylcercolegas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+
+        etbuscarnombre = vista. findViewById(R.id.tvbuscarcolega);
+        etbuscarnombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchPeopleProfile(etbuscarnombre.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         return vista;
     }
 
-    private void buscarcolegas() {
-        Intent intent=new Intent(getContext(), BuscarColegasActivity.class);
 
+    private void searchPeopleProfile(String searchString) {
+
+        final Query searchQuery = reference.orderByChild("nombre_usuario")
+                .startAt(searchString.toUpperCase()).endAt(searchString.toUpperCase() + "\uf8ff");
+        //final Query searchQuery = peoplesDatabaseReference.orderByChild("search_name").equalTo(searchString);
+
+        FirebaseRecyclerOptions<ClsUsuarios> recyclerOptions = new FirebaseRecyclerOptions.Builder<ClsUsuarios>()
+                .setQuery(searchQuery, ClsUsuarios.class)
+                .build();
+        final Context context = getContext();
+        FirebaseRecyclerAdapter<ClsUsuarios, Items> adapter = new FirebaseRecyclerAdapter<ClsUsuarios, Items>(recyclerOptions) {
+            @Override
+            protected void onBindViewHolder(@NonNull final Items holder, final int position, @NonNull final ClsUsuarios model) {
+
+                holder.tvcorreo.setText(model.getCorreo_usuario());
+                holder.tvtnombre.setText(model.getNombre_usuario());
+//                holder.txtcaracter.setText(model.getCaracter());
+
+                if (model.getImage_usuario().equals("default_image")){
+                    holder.imgcam.setImageResource(R.drawable.default_profile_image);
+                }else {
+                    if (isValidContextForGlide(context)){
+                        Glide.with(getContext().getApplicationContext())
+                                .load(model.getImage_usuario())
+                                .placeholder(R.drawable.default_profile_image)
+                                .fitCenter()
+                                .centerCrop()
+                                .into(holder.imgcam);
+                         }
+
+                }
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                    }
+                });
+
+            }
+
+            @NonNull
+            @Override
+            public Items onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_colegas, viewGroup, false);
+                return new Items(view);
+            }
+        };
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+    }
+
+
+    private void buscarcolegas() {
+
+        Intent intent=new Intent(getContext(), BuscarColegasActivity.class);
         Bundle bundle=new Bundle();
         bundle.putString("name",nombre_usuario);
         bundle.putString("foto",foto_usuario);

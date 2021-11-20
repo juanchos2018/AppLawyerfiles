@@ -16,7 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:background="@color/bgAzul"
+            android:background="@color/colorPrimary"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -29,12 +29,12 @@
                 >
 
                 <cn.zhaiyifan.rememberedittext.RememberEditText
-                    android:id="@+id/idetbuscarclase"
+                    android:id="@+id/tvbuscarcolega"
                     android:layout_marginEnd="05dp"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_alignParentTop="true"
-                    android:hint="Buscar "
+                    android:hint="Buscar por Nombre "
                     android:inputType="textCapWords"
                     android:paddingRight="10dp"
                     android:paddingLeft="10dp"
@@ -71,6 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:backgroundTint="@color/colorPrimary"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_add_reg" />
 

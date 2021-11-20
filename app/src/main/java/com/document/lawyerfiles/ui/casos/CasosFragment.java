@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +32,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.document.lawyerfiles.Clases.Casos;
 import com.document.lawyerfiles.Clases.ClsCarpetas;
+import com.document.lawyerfiles.Clases.ClsClientes;
 import com.document.lawyerfiles.Clases.ClsUsuarios;
 import com.document.lawyerfiles.R;
+import com.document.lawyerfiles.activitys.BuscarClienteActivity;
 import com.document.lawyerfiles.activitys.CasosActivity;
 import com.document.lawyerfiles.ui.colegas.ColegasFragment;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -45,6 +49,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -80,6 +85,10 @@ public class CasosFragment extends Fragment {
     private FirebaseAuth mAuth;
 
     String id_user;
+
+    private EditText etbuscarnombre;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -92,7 +101,7 @@ public class CasosFragment extends Fragment {
         etjuez=(EditText)vista.findViewById(R.id.txtjuez);
         etfecha=(EditText)vista.findViewById(R.id.txtfecha);
         spinneretapa=(Spinner)vista.findViewById(R.id.spineretapa);
-        etresumen=(EditText)vista.findViewById(R.id.txtresumen);
+        //etresumen=(EditText)vista.findViewById(R.id.txtresumen);
         btnregistar=(Button)vista.findViewById(R.id.btnregistar);
 
         FloatingActionButton fab = vista.findViewById(R.id.fab4);
@@ -111,13 +120,63 @@ public class CasosFragment extends Fragment {
         recyclerView=(RecyclerView)vista.findViewById(R.id.recylcercasos);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        etbuscarnombre = vista.findViewById(R.id.idetbuscarclase6);
+        etbuscarnombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchPeopleProfile(etbuscarnombre.getText().toString());
+            }
 
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
 
         return  vista;
     }
+
+
+    private void searchPeopleProfile(String searchString) {
+
+        final Query searchQuery = reference.orderByChild("cliente")
+                .startAt(searchString.toUpperCase()).endAt(searchString.toUpperCase() + "\uf8ff");
+        //final Query searchQuery = peoplesDatabaseReference.orderByChild("search_name").equalTo(searchString);
+
+        FirebaseRecyclerOptions<Casos> recyclerOptions = new FirebaseRecyclerOptions.Builder<Casos>()
+                .setQuery(searchQuery, Casos.class)
+                .build();
+        final Context context = getContext();
+        FirebaseRecyclerAdapter<Casos, Items> adapter = new FirebaseRecyclerAdapter<Casos, Items>(recyclerOptions) {
+            @Override
+            protected void onBindViewHolder(@NonNull final Items holder, final int position, @NonNull final Casos model) {
+
+                      holder.tvtipo.setText(model.getTipoCAso());
+                       holder.tvcliente.setText(model.getCliente());
+                       holder.tvfecha.setText(model.getFecha());
+                        holder.tvsteado.setText(model.getEtapa());
+
+
+            }
+
+            @NonNull
+            @Override
+            public Items onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_casos, viewGroup, false);
+                return new Items(view);
+            }
+        };
+        recyclerView.setAdapter(adapter);
+        adapter.startListening();
+    }
+
+
 
     private void agregaacasos() {
 
@@ -149,7 +208,6 @@ public class CasosFragment extends Fragment {
                             items.tvcliente.setText(nombre);
                             items.tvfecha.setText(fecha);
                             items.tvsteado.setText(estado);
-
 
                         }
                     }

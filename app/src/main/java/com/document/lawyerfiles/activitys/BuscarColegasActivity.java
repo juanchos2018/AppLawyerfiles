@@ -86,6 +86,8 @@ public class BuscarColegasActivity extends AppCompatActivity {
         recyclerView=(RecyclerView)findViewById(R.id.recyclercorreos);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         et_buscar=(EditText)findViewById(R.id.id_etbuscarcorreo);
+
+
     }
 
     @Override
@@ -105,9 +107,9 @@ public class BuscarColegasActivity extends AppCompatActivity {
                             final String nombre=dataSnapshot.child("nombre_usuario").getValue().toString();
                             final String id_colega=dataSnapshot.child("id_usuario").getValue().toString();
                             final String image_usuario=dataSnapshot.child("image_usuario").getValue().toString();
+
                             items.tvcorreo.setText(correo);
                             items.tvtnombre.setText(nombre);
-
 
                             items.itemView.setOnClickListener(new View.OnClickListener() {
                                 @Override

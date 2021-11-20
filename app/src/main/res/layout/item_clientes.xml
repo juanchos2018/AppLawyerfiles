@@ -4,57 +4,91 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_margin="8dp"
     android:layout_height="wrap_content">
 
 
     <LinearLayout
+        android:padding="2dp"
+        android:weightSum="4"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_marginTop="5dp"
-        android:layout_height="match_parent">
+        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:layout_width="50dp"
-            android:gravity="center"
-            android:background="@drawable/input_2"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/idcaracter"
-                android:text="A"
-                android:textSize="40sp"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_width="50dp"
+                android:gravity="center"
+                android:background="@drawable/input_2"
                 android:layout_height="wrap_content">
 
-            </TextView>
+                <TextView
+                    android:id="@+id/idcaracter"
+                    android:text="A"
+                    android:textColor="@color/white"
+                    android:textSize="37sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="10dp"
+            android:layout_weight="3"
+            android:layout_marginLeft="1dp"
             android:orientation="vertical"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/id_tvnombrecliente"
                 android:textStyle="bold"
                 android:text="nombre"
+                android:textColor="@color/colorPrimary"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             </TextView>
+
+
+
+
             <TextView
                 android:id="@+id/id_tvcelularcliente"
-                android:layout_width="match_parent"
+                android:text="(01) 9707805836"
+                android:drawableLeft="@drawable/ic_phone"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
             </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="0.3"
+            android:layout_gravity="center"
+            android:gravity="right"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgcall"
+                android:src="@drawable/ic_phone2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </ImageView>
+
         </LinearLayout>
 
     </LinearLayout>
-
 
 </LinearLayout>

@@ -119,6 +119,11 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
     ArrayList<ClsArchivos> birdList=new ArrayList<>();
     android.app.AlertDialog.Builder builder2;
     AlertDialog aler2;
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -617,6 +622,8 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(ListaArchivos.this, "Error " +e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    progressDialog.dismiss();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -657,7 +664,7 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-
+                    Log.e("errde ",exception.getMessage());
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -684,7 +691,12 @@ public class ListaArchivos extends AppCompatActivity  implements DialogoFragment
 
                                 ClsArchivos obj= new ClsArchivos(key,nombrearhivo,tipodocumento,tipoarchivo,peso,fecha,dowloand.toString(),"");
                                 referencearchivos.child(key).setValue(obj);
+
+
+
                             } else {
+
+                            //    Log.e("errde ",)
                                 Toast.makeText(ListaArchivos.this, "Error ", Toast.LENGTH_SHORT).show();
                             }
                         }

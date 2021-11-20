@@ -4,55 +4,84 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_margin="10dp"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        app:cardCornerRadius="5dp"
-        android:layout_marginBottom="5dp"
+
+
+
+    <LinearLayout
+        android:padding="1dp"
+        android:weightSum="3"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:layout_marginBottom="8dp"
         android:layout_height="wrap_content">
+
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/id_imgperfil1"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp">
-                </ImageView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginLeft="5dp"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/id_tvcorreo1"
-                    android:textStyle="bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-                <TextView
-                    android:id="@+id/id_nombre1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-
-            </LinearLayout>
+            <com.github.siyamed.shapeimageview.CircularImageView
+               android:id="@+id/id_imgperfil1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/default_profile_image"
+                app:siBorderWidth="2dp"
+                app:siBorderColor="@color/colorPrimary"/>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_weight="3"
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/id_tvcorreo1"
+                android:text=""
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+
+            <TextView
+                android:id="@+id/id_nombre1"
+                android:text="Direccion de la clinica"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvtelefonoclinica"-->
+<!--                android:text="(01) 9707805836"-->
+<!--                android:drawableLeft="@drawable/ic_phone"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content">-->
+<!--            </TextView>-->
+
+        </LinearLayout>
+
+<!--        <LinearLayout-->
+<!--            android:layout_weight="0.3"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:gravity="right"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <ImageView-->
+<!--                android:src="@drawable/ic_location"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content">-->
+<!--            </ImageView>-->
+
+<!--        </LinearLayout>-->
+
+    </LinearLayout>
+
 
 </LinearLayout>

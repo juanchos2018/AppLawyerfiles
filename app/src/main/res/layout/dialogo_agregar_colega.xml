@@ -51,15 +51,15 @@
 
             <Button
                 android:id="@+id/idbtncerrardialogo"
-                android:layout_marginTop="10dp"
-                android:text="Agregar"
-                android:textStyle="bold"
-                android:layout_gravity="center"
                 android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
-                android:textColor="@color/white"
                 android:background="@drawable/btn_border2"
-                android:layout_height="40dp">
+                android:text="Agregar"
+                android:textColor="@color/white"
+                android:textStyle="bold">
 
             </Button>
         </LinearLayout>
